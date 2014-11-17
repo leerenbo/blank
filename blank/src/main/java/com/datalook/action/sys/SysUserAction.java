@@ -1,6 +1,7 @@
 package com.datalook.action.sys;
 
 
+import java.io.File;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -33,6 +34,40 @@ public class SysUserAction extends BaseAction<SysUser> {
 	private static final long serialVersionUID = 1L;
 	
 	private static final Logger logger = Logger.getLogger(SysUserAction.class);
+
+	private File image;
+	private String imageFileName;
+	private String imageContentType;
+	
+	public File getImage() {
+		return image;
+	}
+
+
+	public void setImage(File image) {
+		this.image = image;
+	}
+
+
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
+	}
+
+
+	public String getImageContentType() {
+		return imageContentType;
+	}
+
+
+	public void setImageContentType(String imageContentType) {
+		this.imageContentType = imageContentType;
+	}
+
 
 	@Resource(name="sysUserService")
 	public void setService(ISysUserService service) {
@@ -156,6 +191,7 @@ public class SysUserAction extends BaseAction<SysUser> {
 	 * @author: lirenbo
 	 */
 	synchronized public void save() {
+		System.out.println(imageFileName);
 		Json json = new Json();
 		if (data != null) {
 			List<SysUser> users =  service.findByProperties(data);

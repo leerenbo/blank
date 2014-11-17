@@ -53,3 +53,11 @@ datalook.pixel_0 = '<%=contextPath%>/style/images/pixel_0.gif';//0像素的背�
 
 <%-- 引入javascript扩展 --%>
 <script src="<%=contextPath%>/js/syExtJavascript.js" type="text/javascript" charset="utf-8"></script>
+
+
+<!-- 引入UEditor -->
+<!-- 配置文件 -->
+<script type="text/javascript" src="<%=contextPath%>/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="<%=contextPath%>/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/ueditor/lang/zh-cn/zh-cn.js"></script>

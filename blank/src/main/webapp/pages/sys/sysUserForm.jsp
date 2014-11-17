@@ -22,7 +22,7 @@
 		} else {
 			url = datalook.contextPath + '/sysUser!save.action';
 		}
-		$.post(url, sy.serializeObject($('form')), function(result) {
+/* 		$.post(url, sy.serializeObject($('form')), function(result) {
 			parent.sy.progressBar('close');//关闭上传进度条
 
 			if (result.success) {
@@ -33,23 +33,32 @@
 				$pjq.messager.alert('提示', result.msg, 'error');
 			}
 		}, 'json');
+ */	
+		$('#ff').form('submit',{
+			url : datalook.contextPath + '/sysUser!save.action',
+		    onSubmit: function(){
+		        // do some check
+		        // return false to prevent submit;
+		        return true;
+		    },
+		    success:function(result){
+		    	console.info(result);
+		    	result=$.parseJSON(result);
+				$pjq.messager.alert('提示', result.msg, 'info');
+				$grid.datagrid('load');
+				$dialog.dialog('destroy');
+		    }
+		});
 	};
+	
 	var submitForm = function($dialog, $grid, $pjq) {
 		if ($('form').form('validate')) {
-/* 			if (uploader.files.length > 0) {
-				uploader.start();
-				uploader.bind('StateChanged', function(uploader) {// 在所有的文件上传完毕时，提交表单
-					if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
-						submitNow($dialog, $grid, $pjq);
-					}
-				});
-			} else {
- */				submitNow($dialog, $grid, $pjq);
-/* 			}
- */		}
+			submitNow($dialog, $grid, $pjq);
+		}
 	};
 	$(function() {
-
+		
+		
 		if ($(':input[name="data.id"]').val().length > 0) {
 			parent.$.messager.progress({
 				text : '数据加载中....'
@@ -145,7 +154,7 @@
 </script>
 </head>
 <body>
-	<form method="post" class="form">
+	<form id="ff"  method="post" enctype="multipart/form-data" class="form">
 	<input type="hidden" name="data.status" value="1"></input>
 		<fieldset>
 			<legend>用户基本信息</legend>
@@ -159,6 +168,8 @@
 				<tr>
 					<th>姓名</th>
 					<td><input name="data.realname" class="easyui-validatebox" data-options="required:true,validType:'length[1,16]',missingMessage:'必填'" /></td>
+					<th>图片上传</th>
+					<td><input type="file" name="image"/></td>
 				</tr>
 				<tr>
 				</tr>

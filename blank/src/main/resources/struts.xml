@@ -18,6 +18,7 @@
 	<constant name="struts.i18n.reload" value="true" />
 	<!-- 文件上传最大值 -->
 	<constant name="struts.multipart.maxSize" value="104857600" />
+	<constant name="struts.multipart.saveDir " value="d:/tmp" />
 	<!-- 让struts2支持动态方法调用 -->
 	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
 	<!-- Action名称中是否可使用斜线 -->
@@ -28,6 +29,7 @@
 	<constant name="struts.dispatcher.parametersWorkaround" value="false" />
 	<!-- ognl静态表达式 -->
 	<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+	
 	<!-- 设置Convention插件是否从jar包中搜索Action类 [可选] 默认值为true 
 	<constant name="struts.convention.action.disableJarScanning" value="true" />-->
 	<!-- 设置Convention插件文件协议类型

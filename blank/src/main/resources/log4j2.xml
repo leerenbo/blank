@@ -5,7 +5,7 @@
 -->
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout charset="GBK" pattern="%p %m%n"/>
+			<PatternLayout charset="UTF-8" pattern="%p %m%n"/>
 		</Console>
 		
 		<RollingFile name="info" fileName="../logs/kaoqin/info.log" filePattern="../logs/kaoqin/info-$${date:yyyy-MM-dd}/%d{yyyy-MM-dd  HH}-%i.log">

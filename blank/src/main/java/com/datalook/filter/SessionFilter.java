@@ -61,7 +61,6 @@ public class SessionFilter implements Filter {
 				list.add(st.nextToken());
 			}
 		}
-
 	}
 
 	public void destroy() {

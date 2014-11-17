@@ -73,13 +73,16 @@
 	<!-- Struts2配置 -->
 	<filter>
 		<filter-name>struts2</filter-name>
-		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+		<filter-class>com.datalook.filter.StrutsFilter</filter-class>
+		<init-param>
+			<param-name>exclude</param-name>
+			<param-value>ueditor/jsp/controller.jsp,.js,.json,.html</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>struts2</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
 
 	<!-- 需要拦截的JSP -->
 	<filter>

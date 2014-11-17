@@ -29,7 +29,7 @@ public class BaseDao<T> implements IBaseDao<T> {
 	 * @param entityManager
 	 */
 	@Override
-	@PersistenceContext(unitName="kaoqinUnit")
+	@PersistenceContext(unitName="blankUnit")
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
