@@ -3,7 +3,13 @@ package com.datalook.action.base;
 
 import java.io.File;
 
+import javax.annotation.Resource;
+
 import org.apache.struts2.convention.annotation.Action;
+import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.manager.RuntimeEngine;
+import org.kie.api.runtime.manager.RuntimeManager;
+import org.kie.api.runtime.process.ProcessInstance;
 
 @Action(value="test")
 public class TestAction extends BaseAction<Object>{
@@ -13,7 +19,9 @@ public class TestAction extends BaseAction<Object>{
     private String imageContentType; //文件类型
     private String content;
     
-    
+	@Resource(name="runtimeManager")
+	RuntimeManager runtimeManager;
+
 	public String getContent() {
 		return content;
 	}
@@ -51,5 +59,14 @@ public class TestAction extends BaseAction<Object>{
 	}
 	public void noSySn_ueditor(){
 		System.out.println(content);
+	}
+	public void noSySn_jbpm(){
+		RuntimeEngine engine = runtimeManager.getRuntimeEngine(null);
+		KieSession ksession = engine.getKieSession();
+
+		ProcessInstance processInstance = ksession.startProcess("com.sample.bpmn.hello");
+
+		runtimeManager.disposeRuntimeEngine(engine);
+		runtimeManager.close();
 	}
 }

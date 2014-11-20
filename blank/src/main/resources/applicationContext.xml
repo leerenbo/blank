@@ -69,9 +69,9 @@
     			<prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
     			<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
     			<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
-                <!-- 自动建表类型 validate|create|create-drop|update 
-                <prop key="hibernate.hbm2ddl.auto">create</prop> 
-                <prop key="hibernate.hbm2ddl.import_files">init.sql</prop> -->  
+                <!-- 自动建表类型 validate|create|create-drop|update -->  
+                <prop key="hibernate.hbm2ddl.auto">update</prop> 
+                <prop key="hibernate.hbm2ddl.import_files">init.sql</prop> 
                 
 <!--				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
                 <prop key="net.sf.ehcache.configurationResourceName">ehcache/ehcache-hibernate-local.xml</prop>
