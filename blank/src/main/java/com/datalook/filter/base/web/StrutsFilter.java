@@ -1,4 +1,4 @@
-package com.datalook.filter;
+package com.datalook.filter.base.web;
 
 import java.io.IOException;
 import java.util.ArrayList;

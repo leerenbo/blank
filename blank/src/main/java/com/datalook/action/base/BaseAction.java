@@ -21,12 +21,12 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.datalook.dao.base.HqlFilter;
-import com.datalook.filter.FastjsonFilter;
+import com.datalook.filter.base.FastjsonFilter;
 import com.datalook.model.sys.easyui.ComboTree;
 import com.datalook.model.sys.easyui.Grid;
 import com.datalook.model.sys.easyui.Json;
 import com.datalook.model.sys.web.SessionInfo;
-import com.datalook.service.base.IBaseService;
+import com.datalook.service.base.BaseService;
 import com.datalook.util.base.BeanUtils;
 import com.datalook.util.base.GenericsUtils;
 import com.datalook.util.base.LogUtil;
@@ -62,10 +62,10 @@ public class BaseAction<T> extends ActionSupport{
 	protected Boolean closed= false;//下拉列表树子节点折叠属性，设置true后，展开所有节点
 	
 	protected List<ComboTree> comboTrees = new ArrayList<ComboTree>();//通用下拉列表对象
-	protected IBaseService<T> service;// 业务逻辑
+	protected BaseService<T> service;// 业务逻辑
 
 	/**
-	 * @see com.datalook.action.base.IBaseAction#setService(com.datalook.service.base.IBaseService)
+	 * @see com.datalook.action.base.IBaseAction#setService(com.datalook.service.base.BaseService)
 	 * 
 	 * 功能描述：
 	 * 时间：2014年9月29日
@@ -73,7 +73,7 @@ public class BaseAction<T> extends ActionSupport{
 	 * @param service
 	 */
 
-	public void setService(IBaseService<T> service) {
+	public void setService(BaseService<T> service) {
 		this.service = service;
 	}
 
@@ -331,7 +331,7 @@ public class BaseAction<T> extends ActionSupport{
 			if (includesProperties != null && includesProperties.length > 0) {
 				filter.getIncludes().addAll(Arrays.<String> asList(includesProperties));
 			}
-			LogUtil.trace("对象转JSON：要排除的属性[" + excludesProperties + "]要包含的属性[" + includesProperties + "]");
+			LogUtil.trace("[JSON准备]：(+)[" + excludesProperties + "]  (-)[" + includesProperties + "]");
 			String json;
 			String User_Agent = getRequest().getHeader("User-Agent");
 			if (StringUtils.indexOfIgnoreCase(User_Agent, "MSIE 6") > -1) {
@@ -342,7 +342,7 @@ public class BaseAction<T> extends ActionSupport{
 				// 使用SerializerFeature.DisableCircularReferenceDetect特性关闭引用检测和生成
 				json = JSON.toJSONString(object, filter,SerializerFeature.WriteDateUseDateFormat, SerializerFeature.DisableCircularReferenceDetect);// 
 			}
-			LogUtil.trace("转换后的JSON字符串：" + json);
+			LogUtil.trace("[JSON数据]：" + json);
 			getResponse().setContentType("text/html;charset=utf-8");
 			getResponse().getWriter().write(json);
 			getResponse().getWriter().flush();

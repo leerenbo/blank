@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.datalook.model.sys.SysUser;
-import com.datalook.service.base.IBaseService;
+import com.datalook.service.base.BaseService;
 
 @RunWith(SpringJUnit4ClassRunner.class) 
 @ContextConfiguration(locations={"classpath:/applicationContext.xml"}) 
@@ -26,7 +26,7 @@ public class Daot extends AbstractTransactionalJUnit4SpringContextTests {
 	IBaseDao<SysUser> locationDao;
 	
 	@Resource(name="sysUserService")
-	IBaseService<SysUser> sysUserService;
+	BaseService<SysUser> sysUserService;
 
 	
 	@Autowired

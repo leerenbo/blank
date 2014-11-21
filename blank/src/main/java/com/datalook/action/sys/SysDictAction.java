@@ -8,23 +8,23 @@ import org.apache.struts2.convention.annotation.Action;
 import com.datalook.action.base.BaseAction;
 import com.datalook.dao.base.HqlFilter;
 import com.datalook.model.sys.SysDict;
-import com.datalook.service.base.IBaseService;
-import com.datalook.service.sys.interfaces.ISysDictService;
+import com.datalook.service.base.BaseService;
+import com.datalook.service.sys.SysDictService;
 
 @Action("sysDict")
 public class SysDictAction extends BaseAction<SysDict>{
 	
 	@Resource(name="sysDictService")
-	public void setService(IBaseService<SysDict> service) {
+	public void setService(BaseService<SysDict> service) {
 		this.service = service;
 	}
 	
 	public void noSy_find(){
 		HqlFilter hqlFilter = new HqlFilter(getRequest());
 		if(!StringUtils.isBlank(hqlFilter.getSqltable())){
-			writeJson(((ISysDictService)service).findValus(hqlFilter));
+			writeJson(((SysDictService)service).findValus(hqlFilter));
 		}else{
-			writeJson(((ISysDictService)service).findValus(hqlFilter));
+			writeJson(((SysDictService)service).findValus(hqlFilter));
 		}
 	}
 	

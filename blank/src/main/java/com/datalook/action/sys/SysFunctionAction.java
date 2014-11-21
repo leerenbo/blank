@@ -14,8 +14,8 @@ import com.datalook.action.base.BaseAction;
 import com.datalook.exception.base.ToWebException;
 import com.datalook.model.sys.SysFunction;
 import com.datalook.model.sys.web.SessionInfo;
-import com.datalook.service.base.IBaseService;
-import com.datalook.service.sys.ISysFunctionService;
+import com.datalook.service.base.BaseService;
+import com.datalook.service.sys.SysFunctionService;
 
 /**
  * 
@@ -36,7 +36,7 @@ public class SysFunctionAction extends BaseAction<SysFunction>{
 	List<SysFunction> functions=new ArrayList<SysFunction>();
 	
 	@Resource(name="sysFunctionService")
-	public void setService(IBaseService<SysFunction> service) {
+	public void setService(BaseService<SysFunction> service) {
 		this.service = service;
 	}
 
@@ -71,6 +71,6 @@ public class SysFunctionAction extends BaseAction<SysFunction>{
 	}
 	
 	public void noSySn_test() throws ToWebException{
-		((ISysFunctionService)service).test("params");
+		((SysFunctionService)service).test("params");
 	}
 }

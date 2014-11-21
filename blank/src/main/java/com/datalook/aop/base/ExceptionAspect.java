@@ -16,7 +16,7 @@ import com.datalook.action.base.BaseAction;
 import com.datalook.exception.base.ToWebException;
 import com.datalook.model.sys.SysDict;
 import com.datalook.model.sys.easyui.Json;
-import com.datalook.service.sys.interfaces.ISysDictService;
+import com.datalook.service.sys.SysDictService;
 import com.datalook.util.base.LogUtil;
 
 @Aspect
@@ -24,7 +24,7 @@ import com.datalook.util.base.LogUtil;
 public class ExceptionAspect {
 
 	@Resource(name="sysDictService")
-	private ISysDictService sysDictService;
+	private SysDictService sysDictService;
 
 	@Order(2000)
 	@AfterThrowing(value = "com.datalook.aop.base.SystemArchitecture.inActionLayer()", throwing = "t")

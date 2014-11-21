@@ -17,7 +17,7 @@ import com.datalook.model.sys.SysRole;
 import com.datalook.model.sys.SysUser;
 import com.datalook.model.sys.easyui.Json;
 import com.datalook.model.sys.web.SessionInfo;
-import com.datalook.service.sys.interfaces.ISysUserService;
+import com.datalook.service.sys.SysUserService;
 import com.datalook.util.base.CookieUtil;
 import com.datalook.util.base.MD5Util;
 
@@ -33,8 +33,6 @@ public class SysUserAction extends BaseAction<SysUser> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private static final Logger logger = Logger.getLogger(SysUserAction.class);
-
 	private File image;
 	private String imageFileName;
 	private String imageContentType;
@@ -70,7 +68,7 @@ public class SysUserAction extends BaseAction<SysUser> {
 
 
 	@Resource(name="sysUserService")
-	public void setService(ISysUserService service) {
+	public void setService(SysUserService service) {
 		this.service = service;
 	}
 
@@ -99,14 +97,11 @@ public class SysUserAction extends BaseAction<SysUser> {
 	 * @author: lirenbo
 	 */
 	public void noSnSy_login() {
-		System.out.println(data);
 		data.setPassword(MD5Util.md5(data.getPassword()));
 		SysUser sysUser = service.getByProperties(data);
-		logger.info("用户登陆"+sysUser);
 		Json json = new Json();
 		if (sysUser != null&&"1".equals(sysUser.getStatus())) {
 			json.setSuccess(true);
-			logger.info("用户登陆成功"+sysUser);
 			SessionInfo sessionInfo = new SessionInfo();
 			Hibernate.initialize(sysUser.getSysRoles());
 			for (SysRole role : sysUser.getSysRoles()) {
@@ -165,7 +160,7 @@ public class SysUserAction extends BaseAction<SysUser> {
 	 */
 	public void grantSysRole() {
 		Json json = new Json();
-		((ISysUserService) service).grantSysRole(id, ids);
+		((SysUserService) service).grantSysRole(id, ids);
 		json.setSuccess(true);
 		writeJson(json);
 	}

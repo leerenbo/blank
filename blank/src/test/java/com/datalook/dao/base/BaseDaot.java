@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.datalook.model.sys.SysFunction;
 import com.datalook.model.sys.SysRole;
 import com.datalook.model.sys.SysUser;
-import com.datalook.service.base.IBaseService;
+import com.datalook.service.base.BaseService;
 @RunWith(SpringJUnit4ClassRunner.class) 
 @ContextConfiguration(locations={"classpath:/applicationContext.xml"}) 
 public class BaseDaot extends AbstractTransactionalJUnit4SpringContextTests{
@@ -27,7 +27,7 @@ public class BaseDaot extends AbstractTransactionalJUnit4SpringContextTests{
 	@Autowired
 	IBaseDao<SysUser> userDao;
 	@Resource(name="sysUserService")
-	IBaseService<SysUser> userService;
+	BaseService<SysUser> userService;
 	
 	SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
 	

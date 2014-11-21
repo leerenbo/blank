@@ -1,4 +1,4 @@
-package com.datalook.filter;
+package com.datalook.filter.base.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.datalook.util.base.LogUtil;
+
 /**
  * 
  * 功能描述：用于过滤需要拦截的JSP文件
@@ -24,9 +26,7 @@ import org.apache.log4j.Logger;
  * @author ：lirenbo
  *
  */
-public class SessionFilter implements Filter {
-
-	private static final Logger logger = Logger.getLogger(SessionFilter.class);
+public class UserSessionFilter implements Filter {
 
 	private List<String> list = new ArrayList<String>();
 
@@ -38,8 +38,7 @@ public class SessionFilter implements Filter {
 
 		for (String url : list) {
 			if (servletPath.indexOf(url) > -1) {// 需要过滤
-				logger.info("进入session过滤器->访问路径为[" + servletPath + "]");
-
+				LogUtil.trace("[Filter] UserSession -> [" + servletPath + "]");
 				if (request.getSession().getAttribute("sessionInfo") == null) {// session不存在需要拦截
 					request.setAttribute("msg", "您还没有登录或登录已超时，请重新登录，然后再刷新本功能！");
 					request.getRequestDispatcher("/error/noSession.jsp").forward(request, response);

@@ -1,4 +1,4 @@
-package com.datalook.filter;
+package com.datalook.filter.base;
 
 import java.util.HashSet;
 import java.util.Set;

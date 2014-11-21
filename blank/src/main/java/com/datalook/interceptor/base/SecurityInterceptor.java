@@ -25,7 +25,7 @@ public class SecurityInterceptor extends MethodFilterInterceptor {
 	protected String doIntercept(ActionInvocation actionInvocation) throws Exception {
 		SessionInfo sessionInfo = (SessionInfo) ServletActionContext.getRequest().getSession().getAttribute("sessionInfo");
 		String servletPath = ServletActionContext.getRequest().getServletPath();
-		LogUtil.trace("进入权限拦截器->访问的资源为：[" + servletPath + "]");
+		LogUtil.trace("[Interceptor] Security -> [" + servletPath + "]");
 
 		servletPath = StringUtils.substringBeforeLast(servletPath, ".");// 去掉后面的后缀*.action之类的
 

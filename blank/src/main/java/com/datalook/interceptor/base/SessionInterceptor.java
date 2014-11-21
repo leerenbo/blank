@@ -21,7 +21,7 @@ public class SessionInterceptor extends MethodFilterInterceptor {
 
 	protected String doIntercept(ActionInvocation actionInvocation) throws Exception {
 		SessionInfo sessionInfo = (SessionInfo) ServletActionContext.getRequest().getSession().getAttribute("sessionInfo");
-		LogUtil.trace("进入session拦截器->访问路径为[" + ServletActionContext.getRequest().getServletPath() + "]");
+		LogUtil.trace("[Interceptor] Session -> [" + ServletActionContext.getRequest().getServletPath() + "]");
 		if (sessionInfo == null) {
 			String errMsg = "您还没有登录或登录已超时，请重新登录，然后再刷新本功能！";
 			LogUtil.trace(errMsg);

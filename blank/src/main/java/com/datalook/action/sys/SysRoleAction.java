@@ -14,18 +14,18 @@ import com.datalook.action.base.BaseAction;
 import com.datalook.model.sys.SysFunction;
 import com.datalook.model.sys.SysRole;
 import com.datalook.model.sys.easyui.Json;
-import com.datalook.service.base.IBaseService;
-import com.datalook.service.sys.interfaces.ISysRoleService;
+import com.datalook.service.base.BaseService;
+import com.datalook.service.sys.SysRoleService;
 
 @Action("sysRole")
 public class SysRoleAction extends BaseAction<SysRole>{
 	
 	private static final long serialVersionUID = 1L;
 	@Resource(name="sysFunctionService")
-	IBaseService<SysFunction> sysFunctionService;
+	BaseService<SysFunction> sysFunctionService;
 	
 	@Resource(name="sysRoleService")
-	public void setService(IBaseService<SysRole> service) {
+	public void setService(BaseService<SysRole> service) {
 		this.service = service;
 	}
 	
@@ -56,7 +56,7 @@ public class SysRoleAction extends BaseAction<SysRole>{
 		}
 		re.setSuccess(true);
 		try {
-			((ISysRoleService)service).grant(id.toString(), grantids, inSomeSysFunctionIds);
+			((SysRoleService)service).grant(id.toString(), grantids, inSomeSysFunctionIds);
 
 		} catch (Exception e) {
 			e.printStackTrace();

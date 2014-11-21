@@ -60,13 +60,10 @@ public class TestAction extends BaseAction<Object>{
 	public void noSySn_ueditor(){
 		System.out.println(content);
 	}
-	public void noSySn_jbpm(){
+	public void noSySn_noSe_jbpm(){
 		RuntimeEngine engine = runtimeManager.getRuntimeEngine(null);
 		KieSession ksession = engine.getKieSession();
 
 		ProcessInstance processInstance = ksession.startProcess("com.sample.bpmn.hello");
-
-		runtimeManager.disposeRuntimeEngine(engine);
-		runtimeManager.close();
 	}
 }

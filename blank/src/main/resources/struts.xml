@@ -50,8 +50,7 @@
 			<interceptor name="sessionInterceptor" class="com.datalook.interceptor.base.SessionInterceptor" />
 			<!-- 权限拦截器 -->
 			<interceptor name="securityInterceptor" class="com.datalook.interceptor.base.SecurityInterceptor" />
-
-
+			
  			<interceptor-stack name="myinterceptoStack">
 				<!--  --><interceptor-ref name="monitoring" />
 				<!-- <interceptor-ref name="encodingInterceptor"/> -->
