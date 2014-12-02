@@ -6,6 +6,4 @@ import com.datalook.service.base.BaseService;
 
 public interface SysFunctionService extends BaseService<SysFunction>{
 
-	public abstract void test(String test) throws ToWebException;
-
 }

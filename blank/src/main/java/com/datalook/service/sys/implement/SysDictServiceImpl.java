@@ -16,20 +16,10 @@ public class SysDictServiceImpl extends BaseServiceImpl<SysDict> implements SysD
 	@Autowired
 	IBaseDao<SysDict> sysDictDao;
 	
-	/**
-	 * @see com.datalook.service.sys.SysDictService#getValue(java.lang.String, java.lang.String)
-	 * 
-	 * 功能描述：
-	 * 时间：2014年10月16日
-	 * @author: lirenbo
-	 * @param location
-	 * @param code
-	 * @return
-	 */
 	@Override
 	@Cacheable({"SysDictValue"})
-	public SysDict getValue(String location,String code){
-		List<SysDict> sysDicts=sysDictDao.find("from SysDict where location ='"+location+"' and code ='"+code+"'");
+	public SysDict getValue(String location,String value){
+		List<SysDict> sysDicts=sysDictDao.find("from SysDict where location ='"+location+"' and value ='"+value+"'");
 		if(sysDicts.size()==0){
 			return null;
 		}else{
@@ -37,16 +27,6 @@ public class SysDictServiceImpl extends BaseServiceImpl<SysDict> implements SysD
 		}
 	}
 	
-	
-	/**
-	 * @see com.datalook.service.sys.SysDictService#findValus(java.lang.String)
-	 * 
-	 * 功能描述：
-	 * 时间：2014年10月16日
-	 * @author: lirenbo
-	 * @param location
-	 * @return
-	 */
 	@Override
 	@Cacheable({"SysDictValues"})
 	public List<SysDict> findValus(String location){
@@ -54,16 +34,6 @@ public class SysDictServiceImpl extends BaseServiceImpl<SysDict> implements SysD
 		return sysDicts;
 	}
 	
-	
-	/**
-	 * @see com.datalook.service.sys.SysDictService#findValus(com.datalook.dao.base.HqlFilter)
-	 * 
-	 * 功能描述：
-	 * 时间：2014年10月16日
-	 * @author: lirenbo
-	 * @param hqlFilter
-	 * @return
-	 */
 	@Override
 	@Cacheable({"SysDictValuesHqlFilter"})
 	public List<SysDict> findValus(HqlFilter hqlFilter){

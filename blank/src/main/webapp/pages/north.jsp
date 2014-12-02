@@ -2,32 +2,32 @@
 <%@ page import="com.datalook.model.sys.web.SessionInfo"%>
 <%
 	String contextPath = request.getContextPath();
-	SessionInfo sessionInfo = (SessionInfo) session.getAttribute("sessionInfo");
+	SessionInfo sessionInfo = (SessionInfo) session.getAttribute(com.datalook.util.base.ConfigUtil.getSessionName());
 %>
 <%-- 引入easyui扩展 --%>
-<script src="<%=contextPath%>/js/syExtEasyUI.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%=contextPath%>/js/EzuiEasyUI.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
 	var lockWindowFun = function() {
-		$.post(datalook.contextPath + '/sysUser!noSnSy_logout.action', function(result) {
+		$.post(ez.contextPath + '/sysUser!noSnSy_logout.action', function(result) {
 			$('#loginDialog').dialog('open');
 		}, 'json');
 	};
 	var logoutFun = function() {
-		$.post(datalook.contextPath + '/sysUser!noSnSy_logout.action', function(result) {
-			location.replace(datalook.contextPath + '/index.jsp');
+		$.post(ez.contextPath + '/sysUser!noSnSy_logout.action', function(result) {
+			location.replace(ez.contextPath + '/index.jsp');
 		}, 'json');
 	};
 	var showMyInfoFun = function() {
-		var dialog = parent.sy.modalDialog({
+		var dialog = parent.ez.modalDialog({
 			title : '我的信息',
-			url : datalook.contextPath + '/pages/userInfo.jsp'
+			url : ez.contextPath + '/pages/userInfo.jsp'
 		});
 	};
 	
 	var loginFun = function() {
 		if ($('#loginDialog form').form('validate')) {
 			$('#loginBtn').linkbutton('disable');
-			$.post(datalook.contextPath + '/sysUser!noSnSy_login.action', $('#loginDialog form').serialize(), function(result) {
+			$.post(ez.contextPath + '/sysUser!noSnSy_login.action', $('#loginDialog form').serialize(), function(result) {
 				if (result.success) {
 					$('#loginDialog').dialog('close');
 				} else {
@@ -77,7 +77,7 @@
 			text : '修改',
 			handler : function() {
 				if ($('#passwordDialog form').form('validate')) {
-					$.post(datalook.contextPath + '/sysUser!noSy_updateCurrentUserPassword.action', {
+					$.post(ez.contextPath + '/sysUser!noSy_updateCurrentUserPassword.action', {
 						'data.password' : $('#password').val()
 					}, function(result) {
 						if (result.success) {
@@ -95,21 +95,21 @@
 	
 	/* ----------插件安装---------- */
 	$("#layout_north_cjazMenu").click(function(){
-		var dialog = parent.sy.modalDialog({
+		var dialog = parent.ez.modalDialog({
 			width : 450,
     		height : 200,
 			title : '插件安装',
-			url : datalook.contextPath + '/opercard/installocx/installGrant.jsp'
+			url : ez.contextPath + '/opercard/installocx/installGrant.jsp'
 		});
 	});
 	/* ----------插件安装---------- */
 	/* ----------串口设置---------- */
 	$("#layout_north_ckszMenu").click(function(){
-		var dialog = parent.sy.modalDialog({
+		var dialog = parent.ez.modalDialog({
 			width : 500,
     		height : 310,
 			title : '串口设置',
-			url : datalook.contextPath + '/opercard/setComValue.jsp'
+			url : ez.contextPath + '/opercard/setComValue.jsp'
 		});
 	});
 	/* ----------串口设置---------- */
@@ -139,20 +139,20 @@
 
 	<div class="menu-sep"></div>
 
-	<div onclick="sy.changeTheme('default');" title="default">default</div>
-	<div onclick="sy.changeTheme('gray');" title="gray">gray</div>
-	<div onclick="sy.changeTheme('bootstrap');" title="bootstrap">bootstrap</div>
-	<div onclick="sy.changeTheme('black');" title="black">black</div>
-	<div onclick="sy.changeTheme('ui-cupertino');" title="ui-cupertino">ui-cupertino</div>
-	<div onclick="sy.changeTheme('ui-dark-hive');" title="ui-dark-hive">ui-dark-hive</div>
-	<div onclick="sy.changeTheme('ui-pepper-grinder');" title="ui-pepper-grinder">ui-pepper-grinder</div>
-	<div onclick="sy.changeTheme('ui-sunny');" title="ui-sunny">ui-sunny</div>
-	<div onclick="sy.changeTheme('metro');" title="metro">metro</div>
-	<div onclick="sy.changeTheme('metro-blue');" title="metro-blue">metro-blue</div>
-	<div onclick="sy.changeTheme('metro-gray');" title="metro-gray">metro-gray</div>
-	<div onclick="sy.changeTheme('metro-green');" title="metro-green">metro-green</div>
-	<div onclick="sy.changeTheme('metro-orange');" title="metro-orange">metro-orange</div>
-	<div onclick="sy.changeTheme('metro-red');" title="metro-red">metro-red</div>
+	<div onclick="ez.changeTheme('default');" title="default">default</div>
+	<div onclick="ez.changeTheme('gray');" title="gray">gray</div>
+	<div onclick="ez.changeTheme('bootstrap');" title="bootstrap">bootstrap</div>
+	<div onclick="ez.changeTheme('black');" title="black">black</div>
+	<div onclick="ez.changeTheme('ui-cupertino');" title="ui-cupertino">ui-cupertino</div>
+	<div onclick="ez.changeTheme('ui-dark-hive');" title="ui-dark-hive">ui-dark-hive</div>
+	<div onclick="ez.changeTheme('ui-pepper-grinder');" title="ui-pepper-grinder">ui-pepper-grinder</div>
+	<div onclick="ez.changeTheme('ui-sunny');" title="ui-sunny">ui-sunny</div>
+	<div onclick="ez.changeTheme('metro');" title="metro">metro</div>
+	<div onclick="ez.changeTheme('metro-blue');" title="metro-blue">metro-blue</div>
+	<div onclick="ez.changeTheme('metro-gray');" title="metro-gray">metro-gray</div>
+	<div onclick="ez.changeTheme('metro-green');" title="metro-green">metro-green</div>
+	<div onclick="ez.changeTheme('metro-orange');" title="metro-orange">metro-orange</div>
+	<div onclick="ez.changeTheme('metro-red');" title="metro-red">metro-red</div>
 </div>
 <div id="layout_north_kzmbMenu" style="width: 100px; display: none;">
 	<div data-options="iconCls:'ext-icon-user_edit'" onclick="$('#passwordDialog').dialog('open');">修改密码</div>

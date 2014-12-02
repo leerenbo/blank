@@ -8,9 +8,9 @@
 	<!-- spring配置文件位置 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:applicationContext.xml,classpath:cxf-server.xml,classpath:jBPM6.xml</param-value>
+		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
-
+<!-- ,classpath:cxf-server.xml,classpath:jBPM6.xml -->
 	<!-- 添加javamelody监控 -->
 	<filter>
 		<filter-name>monitoring</filter-name>
@@ -129,7 +129,7 @@
 		<url-pattern>/druid/*</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
+<!-- 	<servlet>
 		<description>Apache CXF Endpoint</description>
 		<display-name>cxf</display-name>
 		<servlet-name>cxf</servlet-name>
@@ -140,7 +140,7 @@
 		<servlet-name>cxf</servlet-name>
 		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>
-
+ -->
 
 
 

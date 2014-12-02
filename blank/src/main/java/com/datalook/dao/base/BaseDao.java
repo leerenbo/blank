@@ -384,7 +384,6 @@ public class BaseDao<T> implements IBaseDao<T> {
 		Query q = entityManager.createNativeQuery(sql);
 		List los=q.setFirstResult((page - 1) * rows).setMaxResults(rows).getResultList();
 		if(los.size()!=0){
-			System.out.println(los.get(0).getClass());
 			if(los.get(0).getClass().isArray()){
 				return los;
 			}else{
@@ -421,7 +420,6 @@ public class BaseDao<T> implements IBaseDao<T> {
 		}
 		List los=q.getResultList();
 		if(los.size()!=0){
-			System.out.println(los.get(0).getClass());
 			if(los.get(0).getClass().isArray()){
 				return los;
 			}else{
@@ -460,7 +458,6 @@ public class BaseDao<T> implements IBaseDao<T> {
 		}
 		List los=q.setFirstResult((page - 1) * rows).setMaxResults(rows).getResultList();
 		if(los.size()!=0){
-			System.out.println(los.get(0).getClass());
 			if(los.get(0).getClass().isArray()){
 				return los;
 			}else{
@@ -579,7 +576,6 @@ public class BaseDao<T> implements IBaseDao<T> {
 			for(String key:m.keySet()){
 				q.setParameter(key, m.get(key));
 			}
-			System.out.println(hql);
 			return (List<T>)q.getResultList();
 		}
 		return null;

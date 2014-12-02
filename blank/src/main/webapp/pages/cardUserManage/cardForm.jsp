@@ -125,7 +125,7 @@
 					/* --------------无档案开卡-------------- */
 					url = datalook.contextPath + '/card!save.action';
 				}
-				$.post(url, sy.serializeObject($('form')), function(result) {
+				$.post(url, ez.serializeObject($('form')), function(result) {
 					if (result.success) {
 						/* --------------写卡start-------------- */
 						$pjq.messager.progress({
@@ -178,7 +178,7 @@
 				//无档案开卡撤销
 				if ($(':input[name="data.id"]').val() == "" && <%=employeeid%> == null) {
 					var cancelUrl = datalook.contextPath + '/card!noSy_cancelNoArchivesOpenCard.action?newId=' + newId;
-					$.post(cancelUrl, sy.serializeObject($('form')), function(result) {
+					$.post(cancelUrl, ez.serializeObject($('form')), function(result) {
 						if (result.success) {
 							$pjq.messager.alert('提示', result.msg, 'info');
 							$grid.datagrid('load');
@@ -192,7 +192,7 @@
 				if ($(':input[name="data.id"]').val().length > 0 && <%=employeeid%> == null) {
 					$("#cardpwd").val(oldPassWord);
 					var cancelUrl = datalook.contextPath + '/card!noSy_cancelUpdate.action';
-					$.post(cancelUrl, sy.serializeObject($('form')), function(result) {
+					$.post(cancelUrl, ez.serializeObject($('form')), function(result) {
 						if (result.success) {
 							$pjq.messager.alert('提示', result.msg, 'info');
 							$grid.datagrid('load');
@@ -206,7 +206,7 @@
 				//有档案开卡撤销
 				if ($(':input[name="data.id"]').val() == "" && <%=employeeid%> != null) {
 					var cancelUrl = datalook.contextPath + '/card!noSy_cancelArchivesOpenCard.action?newId=' + newId;
-					$.post(cancelUrl, sy.serializeObject($('form')), function(result) {
+					$.post(cancelUrl, ez.serializeObject($('form')), function(result) {
 						if (result.success) {
 							$pjq.messager.alert('提示', result.msg, 'info');
 							$grid.datagrid('load');

@@ -15,14 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 
+import com.datalook.util.base.ConfigUtil;
 import com.datalook.util.base.LogUtil;
 
 /**
  * 
- * 功能描述：用于过滤需要拦截的JSP文件
- * 时间：2014年9月12日
+ * 功能描述：用于过滤需要拦截的JSP文件 时间：2014年9月12日
+ * 
  * @author ：lirenbo
  *
  */
@@ -33,13 +33,11 @@ public class UserSessionFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
-
 		String servletPath = request.getServletPath();
-
 		for (String url : list) {
 			if (servletPath.indexOf(url) > -1) {// 需要过滤
 				LogUtil.trace("[Filter] UserSession -> [" + servletPath + "]");
-				if (request.getSession().getAttribute("sessionInfo") == null) {// session不存在需要拦截
+				if (request.getSession().getAttribute(ConfigUtil.getSessionName()) == null) {// session不存在需要拦截
 					request.setAttribute("msg", "您还没有登录或登录已超时，请重新登录，然后再刷新本功能！");
 					request.getRequestDispatcher("/error/noSession.jsp").forward(request, response);
 					return;
@@ -48,6 +46,7 @@ public class UserSessionFilter implements Filter {
 			}
 		}
 		chain.doFilter(request, response);
+
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {

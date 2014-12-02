@@ -21,6 +21,7 @@ public class SysDictAction extends BaseAction<SysDict>{
 	
 	public void noSy_find(){
 		HqlFilter hqlFilter = new HqlFilter(getRequest());
+		((SysDictService)service).findValus("com.datalook.model.sys.functiontype");
 		if(!StringUtils.isBlank(hqlFilter.getSqltable())){
 			writeJson(((SysDictService)service).findValus(hqlFilter));
 		}else{

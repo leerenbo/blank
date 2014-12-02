@@ -13,7 +13,7 @@
 <%@ page import="java.util.HashSet"%>
 <%
 	String contextPath = request.getContextPath();
-	SessionInfo sessionInfo = (SessionInfo) session.getAttribute("sessionInfo");
+	SessionInfo sessionInfo = (SessionInfo) session.getAttribute(com.datalook.util.base.ConfigUtil.getSessionName());
 	Set<SysRole> roles = sessionInfo.getSysUser().getSysRoles();//用户的角色
 	List<SysFunction> resources = new ArrayList<SysFunction>();//用户可访问的资源
 	for (SysRole role : roles) {

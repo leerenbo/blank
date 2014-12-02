@@ -7,7 +7,7 @@
 <script type="text/javascript">
 	var grid;
 	var addFun = function() {
-		var dialog = parent.sy.modalDialog({
+		var dialog = parent.ez.modalDialog({
 			title : '添加打卡信息',
 			url : datalook.contextPath + '/pages/information/clockRuleForm.jsp',
 			buttons : [ {
@@ -19,13 +19,13 @@
 		});
 	};
 	var showFun = function(id) {
-		var dialog = parent.sy.modalDialog({
+		var dialog = parent.ez.modalDialog({
 			title : '查看打卡信息',
 			url : datalook.contextPath + '/pages/information/clockRuleForm.jsp?id=' + id
 		});
 	};
 	var editFun = function(id) {
-		var dialog = parent.sy.modalDialog({
+		var dialog = parent.ez.modalDialog({
 			title : '编辑打卡信息',
 			url : datalook.contextPath + '/pages/information/clockRuleForm.jsp?id=' + id,
 			buttons : [ {
@@ -130,13 +130,13 @@
 				formatter : function(value, row) {
 					var str = '';
 					<s:if test="@com.datalook.util.base.SecurityUtil@havePermission('/clockRule!getById')">
-						str += sy.formatString('<img class="iconImg ext-icon-note" title="查看" onclick="showFun(\'{0}\');"/>', row.id);
+						str += ez.formatString('<img class="iconImg ext-icon-note" title="查看" onclick="showFun(\'{0}\');"/>', row.id);
 					</s:if>
 					<s:if test="@com.datalook.util.base.SecurityUtil@havePermission('/clockRule!update')">
-						str += sy.formatString('<img class="iconImg ext-icon-note_edit" title="编辑" onclick="editFun(\'{0}\');"/>', row.id);
+						str += ez.formatString('<img class="iconImg ext-icon-note_edit" title="编辑" onclick="editFun(\'{0}\');"/>', row.id);
 					</s:if>
 					<s:if test="@com.datalook.util.base.SecurityUtil@havePermission('/clockRule!deleteByStatus')">
-						str += sy.formatString('<img class="iconImg ext-icon-note_delete" title="删除" onclick="removeFun(\'{0}\');"/>', row.id);
+						str += ez.formatString('<img class="iconImg ext-icon-note_delete" title="删除" onclick="removeFun(\'{0}\');"/>', row.id);
 					</s:if>
 					return str;
 				}
@@ -150,7 +150,7 @@
 				});
 			},
 			onLoadSuccess : function(data) {
-				$('.iconImg').attr('src', sy.pixel_0);
+				$('.iconImg').attr('src', ez.pixel_0);
 				parent.$.messager.progress('close');
 			}
 		});

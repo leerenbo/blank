@@ -24,8 +24,8 @@
 		<link rel="stylesheet" href="<%=contextPath%>/js/jquery-easyui-1.4/themes/icon.css" type="text/css">
 		<script type="text/javascript" src="<%=contextPath%>/js/jquery-easyui-1.4/jquery.easyui.min.js" charset="utf-8"></script>
 		<script type="text/javascript" src="<%=contextPath%>/js/jquery-easyui-1.4/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
-		<link rel="stylesheet" href="<%=contextPath%>/style/syExtIcon.css" type="text/css">
-		<link rel="stylesheet" href="<%=contextPath%>/style/syExtCss.css" type="text/css">
+		<link rel="stylesheet" href="<%=contextPath%>/style/EzuiIcon.css" type="text/css">
+		<link rel="stylesheet" href="<%=contextPath%>/style/EzuiCss.css" type="text/css">
 	    <script type="text/javascript">
 	    	//显示、隐藏psam卡槽
 			function setCardType(obj){

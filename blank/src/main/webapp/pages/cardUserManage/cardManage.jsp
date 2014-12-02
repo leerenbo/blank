@@ -179,24 +179,24 @@
 									var str = '';
 									if (row.id > 30000000) {
 										<s:if test="@com.datalook.util.base.SecurityUtil@havePermission('/card!update')">
-											str += sy.formatString('<img class="iconImg ext-icon-note_edit" title="编辑" onclick="editFun(\'{0}\');"/>', row.id);
+											str += ez.formatString('<img class="iconImg ext-icon-note_edit" title="编辑" onclick="editFun(\'{0}\');"/>', row.id);
 										</s:if>
 									}
 									if (row.id > 30000000) {
 										<s:if test="@com.datalook.util.base.SecurityUtil@havePermission('/card!deleteByStatus')">
-											str += sy.formatString('<img class="iconImg ext-icon-note_delete" title="销户" onclick="removeFun(\'{0}\', \'{1}\');"/>', row.id, row.employee.id);
+											str += ez.formatString('<img class="iconImg ext-icon-note_delete" title="销户" onclick="removeFun(\'{0}\', \'{1}\');"/>', row.id, row.employee.id);
 										</s:if>
 									}
 									if (row.status == '1' && row.id > 30000000) {
 										<s:if test="@com.datalook.util.base.SecurityUtil@havePermission('/card!cardLoss')">
-											str += sy.formatString('<img class="iconImg ext-icon-key_delete" title="挂失" onclick="cardLoss(\'{0}\');"/>', row.id);
+											str += ez.formatString('<img class="iconImg ext-icon-key_delete" title="挂失" onclick="cardLoss(\'{0}\');"/>', row.id);
 										</s:if>
 									} else if (row.status == '2' && row.id > 30000000) {
 										<s:if test="@com.datalook.util.base.SecurityUtil@havePermission('/card!cardRemoveLoss')">
-											str += sy.formatString('<img class="iconImg ext-icon-key_add" title="解挂" onclick="cardRemoveLoss(\'{0}\');"/>', row.id);
+											str += ez.formatString('<img class="iconImg ext-icon-key_add" title="解挂" onclick="cardRemoveLoss(\'{0}\');"/>', row.id);
 										</s:if>
 										<s:if test="@com.datalook.util.base.SecurityUtil@havePermission('/card!cardChange')">
-											str += sy.formatString('<img class="iconImg ext-icon-page_refresh" title="换卡" onclick="cardChange(\'{0}\');"/>', row.id);
+											str += ez.formatString('<img class="iconImg ext-icon-page_refresh" title="换卡" onclick="cardChange(\'{0}\');"/>', row.id);
 										</s:if>
 									}
 									return str;
@@ -212,7 +212,7 @@
 						});
 					},
 					onLoadSuccess : function(data){
-						$('.iconImg').attr('src', sy.pixel_0);
+						$('.iconImg').attr('src', ez.pixel_0);
 						parent.$.messager.progress('close');
 					}
 				});
@@ -220,7 +220,7 @@
 				
 				/* ----------------------无档案开卡start---------------------- */
 				$("#noArchivesOpenCard").click(function(){
-					var dialog = parent.sy.modalDialog({
+					var dialog = parent.ez.modalDialog({
 						title : '无档案开卡',
 						url : datalook.contextPath + '/pages/cardUserManage/cardForm.jsp',
 						buttons : [ 
@@ -238,7 +238,7 @@
 				
 				/* ----------------------过滤和重置过滤start---------------------- */
 				$("#query").click(function(){
-					grid.datagrid('load',sy.serializeObject($('#searchForm')));
+					grid.datagrid('load',ez.serializeObject($('#searchForm')));
 				});
 				
 				$("#clear").click(function(){
@@ -271,7 +271,7 @@
 						$.messager.alert('提示', '一卡通同步数据，不允许编辑', 'info');
 						return;
 					}
-					var dialog = parent.sy.modalDialog({
+					var dialog = parent.ez.modalDialog({
 						title : '编辑卡信息',
 						url : datalook.contextPath + '/pages/cardUserManage/cardForm.jsp?id=' + id,
 						buttons : [ 
@@ -463,7 +463,7 @@
 			
 			/* ----------------------卡户编辑start---------------------- */
 			function editFun(id) {
-				var dialog = parent.sy.modalDialog({
+				var dialog = parent.ez.modalDialog({
 					title : '编辑卡信息',
 					url : datalook.contextPath + '/pages/cardUserManage/cardForm.jsp?id=' + id,
 					buttons : [ 
@@ -731,7 +731,7 @@
 			//撤销换卡
 			function cancelOper(newId){
 				var cancelUrl = datalook.contextPath + '/card!noSy_cancelCardChange.action?newId=' + newId;
-				$.post(cancelUrl, sy.serializeObject($("#cardChangeDialog form")), function(result) {
+				$.post(cancelUrl, ez.serializeObject($("#cardChangeDialog form")), function(result) {
 					if (result.success) {
 						$("#cardChangeDialog").dialog('close');
 						$.messager.alert('提示', result.msg, 'info', function() {

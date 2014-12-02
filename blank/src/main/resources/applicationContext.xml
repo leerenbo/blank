@@ -15,10 +15,10 @@
 		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
-		default-lazy-init="true">
+		>
 	
 	<context:property-placeholder location="classpath:config.properties"/>
-	<bean id="dataSource"  class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close" lazy-init="true">  
+	<bean id="dataSource"  class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close" >  
 		<property name="url" value="${jdbc_url}" />
 		<property name="username" value="${jdbc_username}" />
 		<property name="password" value="${jdbc_password}" />
@@ -48,7 +48,7 @@
 		<property name="filters" value="stat" />
 	</bean>
 	
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" lazy-init="true">
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" >
     	<property name="persistenceUnitName" value="blankUnit"></property>
     	<property name="dataSource" ref="dataSource"></property>
     	<property name="packagesToScan">
@@ -69,9 +69,9 @@
     			<prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
     			<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
     			<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
-                <!-- 自动建表类型 validate|create|create-drop|update -->  
-                <prop key="hibernate.hbm2ddl.auto">update</prop> 
-                <prop key="hibernate.hbm2ddl.import_files">init.sql</prop> 
+                <!-- 自动建表类型 validate|create|create-drop|update
+                <prop key="hibernate.hbm2ddl.auto">create</prop> 
+                <prop key="hibernate.hbm2ddl.import_files">init.sql</prop>-->  
                 
 <!--				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
                 <prop key="net.sf.ehcache.configurationResourceName">ehcache/ehcache-hibernate-local.xml</prop>

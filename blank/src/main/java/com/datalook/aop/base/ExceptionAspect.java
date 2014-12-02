@@ -15,7 +15,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import com.datalook.action.base.BaseAction;
 import com.datalook.exception.base.ToWebException;
 import com.datalook.model.sys.SysDict;
-import com.datalook.model.sys.easyui.Json;
+import com.datalook.model.sys.easyui.Message;
 import com.datalook.service.sys.SysDictService;
 import com.datalook.util.base.LogUtil;
 
@@ -29,7 +29,7 @@ public class ExceptionAspect {
 	@Order(2000)
 	@AfterThrowing(value = "com.datalook.aop.base.SystemArchitecture.inActionLayer()", throwing = "t")
 	public void errorExceptionInActionLayer(JoinPoint jp, Throwable t) {
-		Json re = new Json();
+		Message re = new Message();
 		if (t instanceof ToWebException) {
 			ToWebException toWebException=(ToWebException)t;
 			if (toWebException.isWriteLog()) {

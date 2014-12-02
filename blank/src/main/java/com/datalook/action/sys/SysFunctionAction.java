@@ -13,29 +13,26 @@ import org.apache.struts2.convention.annotation.Results;
 import com.datalook.action.base.BaseAction;
 import com.datalook.exception.base.ToWebException;
 import com.datalook.model.sys.SysFunction;
+import com.datalook.model.sys.easyui.Message;
 import com.datalook.model.sys.web.SessionInfo;
 import com.datalook.service.base.BaseService;
 import com.datalook.service.sys.SysFunctionService;
 
 /**
  * 
- * 功能描述：系统功能
- * 时间：2014年9月11日
+ * 功能描述：系统功能 时间：2014年9月11日
+ * 
  * @author ：lirenbo
  *
  */
 @Action("sysFunction")
-@Results({
-	@Result(name="makeMenu",location="/pages/west.jsp")	
-})
-public class SysFunctionAction extends BaseAction<SysFunction>{
+@Results({ @Result(name = "makeMenu", location = "/pages/west.jsp") })
+public class SysFunctionAction extends BaseAction<SysFunction> {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger = Logger.getLogger(SysFunctionAction.class);
+	List<SysFunction> functions;
 
-	List<SysFunction> functions=new ArrayList<SysFunction>();
-	
-	@Resource(name="sysFunctionService")
+	@Resource(name = "sysFunctionService")
 	public void setService(BaseService<SysFunction> service) {
 		this.service = service;
 	}
@@ -43,34 +40,53 @@ public class SysFunctionAction extends BaseAction<SysFunction>{
 	public List<SysFunction> getFunctions() {
 		return functions;
 	}
+
 	public void setFunctions(List<SysFunction> functions) {
 		this.functions = functions;
 	}
 
 	/**
-	 * 功能描述：获取个人功能
-	 * 时间：2014年9月11日
+	 * 功能描述：获取个人功能 时间：2014年9月11日
+	 * 
 	 * @author ：lirenbo
 	 * @return
 	 */
-	public String noSy_makeMenu(){
-		SessionInfo sessionInfo = (SessionInfo) getSession().getAttribute("sessionInfo");
-		functions=sessionInfo.getAllFunction();
-		logger.info(functions);
+	public String noSy_makeMenu() {
+		SessionInfo sessionInfo = getSessionInfo();
+		functions = sessionInfo.getAllFunction();
 		return "makeMenu";
 	}
-	
+
 	/**
-	 * 功能描述：查询所有功能
-	 * 时间：2014年9月11日
+	 * 功能描述：查询所有功能 时间：2014年9月11日
+	 * 
 	 * @author ：lirenbo
 	 */
-	public void noSy_getAllMenuWithRoot(){
-		functions=service.find("from SysFunction where functiontype!='0'");
+	public void noSy_getAllMenuWithRoot() {
+		functions = service.find("from SysFunction where functiontype!='0'");
 		writeJson(functions);
 	}
-	
-	public void noSySn_test() throws ToWebException{
-		((SysFunctionService)service).test("params");
+
+	@Override
+	protected Message beforeSave() {
+		dataTypeAutoSet();
+		return super.beforeSave();
+	}
+
+	@Override
+	protected Message beforeUpdate() {
+		dataTypeAutoSet();
+		return super.beforeUpdate();
+	}
+
+	private void dataTypeAutoSet() {
+		String type = service.getById(data.getSysFunction().getId()).getFunctiontype();
+		if ("2".equals(type)) {
+			data.setFunctiontype("3");
+		} else if ("3".equals(type)) {
+			data.setFunctiontype("0");
+		} else if ("-1".equals(type)) {
+			data.setFunctiontype("2");
+		}
 	}
 }

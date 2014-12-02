@@ -17,7 +17,7 @@
 		$(':radio').each(function(index) {//初始化小图标
 			$(this).after('<img class="iconImg ' + $(this).val() + '"/>');
 		});
-		$('.iconImg').attr('src', sy.pixel_0);
+		$('.iconImg').attr('src', ez.pixel_0);
 
 		$('td').click(function() {//绑定点击td事件，作用是点击td的时候，就可以选中，不一定非得点击radio组件
 			$(this).find(':radio').attr('checked', 'checked');

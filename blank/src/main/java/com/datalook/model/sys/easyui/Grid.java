@@ -7,7 +7,7 @@ public class Grid implements java.io.Serializable {
 
 	private Long total = 0L;
 	private List rows = new ArrayList();
-
+	private List footer;
 	public Long getTotal() {
 		return total;
 	}
@@ -22,6 +22,14 @@ public class Grid implements java.io.Serializable {
 
 	public void setRows(List rows) {
 		this.rows = rows;
+	}
+
+	public List getFooter() {
+		return footer;
+	}
+
+	public void setFooter(List footer) {
+		this.footer = footer;
 	}
 
 }

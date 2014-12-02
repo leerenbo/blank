@@ -59,7 +59,7 @@ public class HqlFilter {
 	private String orderAndSortStr;
 	private String hqltable;
 	private String sqltable;
-	
+	private StringBuilder hashStr=new StringBuilder();
 	public HqlFilter() {
 
 	}
@@ -212,6 +212,7 @@ public class HqlFilter {
 	 * @param value
 	 */
 	public void addCondition(String condition, String value) {
+		hashStr.append(condition).append(":").append(value).append(",");
 		if (condition != null && value != null&&value!="") {
 			if (condition.startsWith("hqland_")) {// 如果有需要过滤的字段
 				condition=condition.substring(7);
@@ -354,5 +355,30 @@ public class HqlFilter {
 			return Boolean.parseBoolean(value);
 		}
 		return null;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((hashStr == null) ? 0 : hashStr.toString().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		HqlFilter other = (HqlFilter) obj;
+		if (hashStr.toString() == null) {
+			if (other.hashStr.toString() != null)
+				return false;
+		} else if (!hashStr.toString().equals(other.hashStr.toString()))
+			return false;
+		return true;
 	}
 }

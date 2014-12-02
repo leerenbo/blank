@@ -126,14 +126,14 @@
 								formatter : function(value, row){
 									var str = '';
 									<s:if test="@com.datalook.util.base.SecurityUtil@havePermission('/employee!update')">
-										str += sy.formatString('<img class="iconImg ext-icon-note_edit" title="编辑" onclick="editFun(\'{0}\');"/>', row.id);
+										str += ez.formatString('<img class="iconImg ext-icon-note_edit" title="编辑" onclick="editFun(\'{0}\');"/>', row.id);
 									</s:if>
 									<s:if test="@com.datalook.util.base.SecurityUtil@havePermission('/employee!deleteByStatus')">
-										str += sy.formatString('<img class="iconImg ext-icon-note_delete" title="删除" onclick="removeFun(\'{0}\');"/>', row.id);
+										str += ez.formatString('<img class="iconImg ext-icon-note_delete" title="删除" onclick="removeFun(\'{0}\');"/>', row.id);
 									</s:if>
 									if (row.cards == "undefined" || row.cards == null || row.cards == undefined || row.cards == "") {
 										<s:if test="@com.datalook.util.base.SecurityUtil@havePermission('/employee!saveArchivesOpenCard')">
-											str += sy.formatString('<img class="iconImg ext-icon-vcard_add" title="有档案开卡" onclick="ArchivesOpenCard(\'{0}\');"/>', row.id);
+											str += ez.formatString('<img class="iconImg ext-icon-vcard_add" title="有档案开卡" onclick="ArchivesOpenCard(\'{0}\');"/>', row.id);
 										</s:if>
 									}
 									return str;
@@ -149,7 +149,7 @@
 						});
 					},
 					onLoadSuccess : function(data){
-						$('.iconImg').attr('src', sy.pixel_0);
+						$('.iconImg').attr('src', ez.pixel_0);
 						parent.$.messager.progress('close');
 					}
 				});
@@ -158,7 +158,7 @@
 				
 				/* ----------------------员工档案增加start---------------------- */
 				$("#addFun").click(function(){
-					var dialog = parent.sy.modalDialog({
+					var dialog = parent.ez.modalDialog({
 						title : '员工档案增加',
 						url : datalook.contextPath + '/pages/cardUserManage/employeeForm.jsp',
 						buttons : [ {
@@ -173,7 +173,7 @@
 				
 				/* ----------------------过滤和重置过滤start---------------------- */
 				$("#query").click(function(){
-					grid.datagrid('load',sy.serializeObject($('#searchForm')));
+					grid.datagrid('load',ez.serializeObject($('#searchForm')));
 				});
 				
 				$("#clear").click(function(){
@@ -190,7 +190,7 @@
 						$.messager.alert('提示', '请选择一条信息进行操作', 'info');
 						return;
 					}
-					var dialog = parent.sy.modalDialog({
+					var dialog = parent.ez.modalDialog({
 						title : '编辑用户信息',
 						url : datalook.contextPath + '/pages/cardUserManage/employeeForm.jsp?id=' + rows[0].id,
 						buttons : [ 
@@ -287,7 +287,7 @@
 						$.messager.alert('提示', '该员工已开卡，不能重复开卡', 'info');
 						return;
 					}
-					var dialog = parent.sy.modalDialog({
+					var dialog = parent.ez.modalDialog({
 						title : '有档案开卡',
 						url : datalook.contextPath + '/pages/cardUserManage/cardForm.jsp?employeeid=' + id,
 						buttons : [ 
@@ -307,7 +307,7 @@
 			
 			/* ----------------------员工档案编辑start---------------------- */
 			var editFun = function (id) {
-				var dialog = parent.sy.modalDialog({
+				var dialog = parent.ez.modalDialog({
 					title : '编辑用户信息',
 					url : datalook.contextPath + '/pages/cardUserManage/employeeForm.jsp?id=' + id,
 					buttons : [ 
@@ -371,7 +371,7 @@
 			
 			/* ----------------------有档案开卡start---------------------- */
 			function ArchivesOpenCard(id){
-				var dialog = parent.sy.modalDialog({
+				var dialog = parent.ez.modalDialog({
 					title : '有档案开卡',
 					url : datalook.contextPath + '/pages/cardUserManage/cardForm.jsp?employeeid=' + id,
 					buttons : [ 

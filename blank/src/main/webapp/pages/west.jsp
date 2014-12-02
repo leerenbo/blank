@@ -3,14 +3,14 @@
 <%@taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript" charset="utf-8">
 	function openTabInMain(title,src,iconCls){
-		src=datalook.contextPath+src;
+		src=ez.contextPath+src;
  		var tabs = $('#mainTabs');
 
 		var opts = {
 			title : title,
 			closable : true,
 			iconCls: iconCls,
-			content : sy.formatString('<iframe src="{0}" allowTransparency="true" style="border:0;width:100%;height:99%;" frameBorder="0"></iframe>', src),
+			content : ez.formatString('<iframe src="{0}" allowTransparency="true" style="border:0;width:100%;height:99%;" frameBorder="0"></iframe>', src),
 			border : false,
 			fit : true
 		};

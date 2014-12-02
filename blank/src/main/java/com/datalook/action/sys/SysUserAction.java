@@ -8,16 +8,16 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.hibernate.Hibernate;
 
 import com.datalook.action.base.BaseAction;
 import com.datalook.model.sys.SysRole;
 import com.datalook.model.sys.SysUser;
-import com.datalook.model.sys.easyui.Json;
+import com.datalook.model.sys.easyui.Message;
 import com.datalook.model.sys.web.SessionInfo;
 import com.datalook.service.sys.SysUserService;
+import com.datalook.util.base.ConfigUtil;
 import com.datalook.util.base.CookieUtil;
 import com.datalook.util.base.MD5Util;
 
@@ -33,45 +33,10 @@ public class SysUserAction extends BaseAction<SysUser> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private File image;
-	private String imageFileName;
-	private String imageContentType;
-	
-	public File getImage() {
-		return image;
-	}
-
-
-	public void setImage(File image) {
-		this.image = image;
-	}
-
-
-	public String getImageFileName() {
-		return imageFileName;
-	}
-
-
-	public void setImageFileName(String imageFileName) {
-		this.imageFileName = imageFileName;
-	}
-
-
-	public String getImageContentType() {
-		return imageContentType;
-	}
-
-
-	public void setImageContentType(String imageContentType) {
-		this.imageContentType = imageContentType;
-	}
-
-
 	@Resource(name="sysUserService")
 	public void setService(SysUserService service) {
 		this.service = service;
 	}
-
 
 	/**
 	 * @see com.datalook.action.sys.ISysUserAction#noSnSy_logout()
@@ -84,7 +49,7 @@ public class SysUserAction extends BaseAction<SysUser> {
 		if (getSession() != null) {
 			getSession().invalidate();
 		}
-		Json j = new Json();
+		Message j = new Message();
 		j.setSuccess(true);
 		writeJson(j);
 	}
@@ -99,7 +64,7 @@ public class SysUserAction extends BaseAction<SysUser> {
 	public void noSnSy_login() {
 		data.setPassword(MD5Util.md5(data.getPassword()));
 		SysUser sysUser = service.getByProperties(data);
-		Json json = new Json();
+		Message json = new Message();
 		if (sysUser != null&&"1".equals(sysUser.getStatus())) {
 			json.setSuccess(true);
 			SessionInfo sessionInfo = new SessionInfo();
@@ -108,41 +73,28 @@ public class SysUserAction extends BaseAction<SysUser> {
 				Hibernate.initialize(role.getSysFunctions());
 			}
 			sessionInfo.setSysUser(sysUser);
-			getSession().setAttribute("sessionInfo", sessionInfo);
+			getSession().setAttribute(ConfigUtil.getSessionName(), sessionInfo);
 		} else {
 			json.setMsg("用户名或密码错误！");
 		}
-		if(CookieUtil.haveKeyValue("easyuiStyle", "check")||CookieUtil.haveKeyValue("easyuiStyle", "icon")){
-			
-		}else{
-			getResponse().addCookie(new Cookie("easyuiStyle", "check"));
-		}
-		
 		writeJson(json);
 	}
 	
-	/**
-	 * @see com.datalook.action.sys.ISysUserAction#noSy_updateCurrentUserPassword()
-	 * 
-	 * 功能描述：
-	 * 时间：2014年9月29日
-	 * @author: lirenbo
-	 */
 	public void noSy_updateCurrentUserPassword() {
-		SessionInfo sessionInfo = (SessionInfo) getSession().getAttribute("sessionInfo");
-		Json json = new Json();
+		SessionInfo sessionInfo = getSessionInfo();
+		Message json = new Message();
 		SysUser user = service.getById(sessionInfo.getSysUser().getId());
 		user.setPassword(MD5Util.md5(data.getPassword()));
-		sessionInfo.getSysUser().setPassword(MD5Util.md5(data.getPassword()));
-//		getSession().removeAttribute("sessionInfo");
-		getSession().setAttribute("sessionInfo", sessionInfo);
 		service.saveOrUpdate(user);
+		sessionInfo.getSysUser().setPassword(MD5Util.md5(data.getPassword()));
+		getSession().setAttribute(ConfigUtil.getSessionName(), sessionInfo);
 		json.setSuccess(true);
+		json.setMsg("密码修改成功");
 		writeJson(json);
 	}
 	
 	public void noSy_checkCurrentUserPassword() {
-		SessionInfo sessionInfo = (SessionInfo) getSession().getAttribute("sessionInfo");
+		SessionInfo sessionInfo = getSessionInfo();
 		SysUser user = sessionInfo.getSysUser();
 		if(StringUtils.equals(MD5Util.md5(data.getPassword()),user.getPassword())){
 			writeJson(true);
@@ -159,9 +111,10 @@ public class SysUserAction extends BaseAction<SysUser> {
 	 * @author: lirenbo
 	 */
 	public void grantSysRole() {
-		Json json = new Json();
-		((SysUserService) service).grantSysRole(id, ids);
+		Message json = new Message();
+		((SysUserService) service).grantSysRole(data.getId(), ids);
 		json.setSuccess(true);
+		json.setMsg("授权成功");
 		writeJson(json);
 	}
 	
@@ -171,34 +124,40 @@ public class SysUserAction extends BaseAction<SysUser> {
 	 * 功能描述：
 	 * 时间：2014年9月29日
 	 * @author: lirenbo
+	 * @throws IllegalAccessException 
 	 */
-	public void noSy_getRolesByUserId() {
-		SysUser sysUser=service.getById(id);
-		writeJson(sysUser.getSysRoles());
+	public void noSy_getRolesByUserId() throws IllegalAccessException {
+		writeJson(service.getById(data.getId()).getSysRoles());
 	}
 
-	/**
-	 * 
-	 * @see com.datalook.action.base.BaseAction#save()
-	 * 
-	 * 功能描述：新建用户
-	 * 时间：2014年9月11日
-	 * @author: lirenbo
-	 */
-	synchronized public void save() {
-		System.out.println(imageFileName);
-		Json json = new Json();
-		if (data != null) {
-			List<SysUser> users =  service.findByProperties(data);
-			if (users.size() !=0 ) {
-				json.setMsg("新建用户失败，用户名已存在！");
-			} else {
-				data.setPassword(MD5Util.md5("123456"));
-				service.save(data);
-				json.setMsg("新建用户成功！默认密码：123456");
-				json.setSuccess(true);
-			}
+	@Override
+	protected Message beforeSave() {
+		Message json = new Message();
+		SysUser s=new SysUser();
+		s.setUsername(data.getUsername());
+		List<SysUser> users =  service.findByProperties(s);
+		if (users.size() !=0 ) {
+			json.setMsg("新建用户失败，用户已存在！");
+		} else {
+			data.setPassword(MD5Util.md5("123456"));
+			json.setMsg("新建用户成功！默认密码：123456");
+			json.setSuccess(true);
 		}
-		writeJson(json);
+		return json;
+	}
+
+	@Override
+	protected Message beforeUpdate() {
+		Message json = new Message();
+		SysUser s=new SysUser();
+		s.setUsername(data.getUsername());
+		List<SysUser> users =  service.findByProperties(s);
+		if (users.size() !=0 ) {
+			json.setMsg("修改用户失败，用户已存在！");
+		} else {
+			json.setSuccess(true);
+			json.setMsg("修改用户成功！");
+		}
+		return json;
 	}
 }

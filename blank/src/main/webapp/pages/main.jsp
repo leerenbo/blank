@@ -2,7 +2,7 @@
 <%@ page import="com.datalook.model.sys.web.SessionInfo"%>
 <%
 	String contextPath = request.getContextPath();
-	SessionInfo sessionInfo = (SessionInfo) session.getAttribute("sessionInfo");
+	SessionInfo sessionInfo = (SessionInfo) session.getAttribute(com.datalook.util.base.ConfigUtil.getSessionName());
 %>
 <%String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();%>
 <!DOCTYPE html>

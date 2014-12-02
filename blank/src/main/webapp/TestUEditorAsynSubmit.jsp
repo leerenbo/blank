@@ -8,7 +8,7 @@
 
 	$(function() {
 		$('#ff').form({
-			url : datalook.contextPath + '/test!noSySn_ueditor.action',
+			url : ez.contextPath + '/test!noSySn_ueditor.action',
 			onSubmit : function() {
 				// do some check
 				// return false to prevent submit;

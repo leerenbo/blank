@@ -1,6 +1,8 @@
 package com.datalook.model.sys.easyui;
 
-public class Json implements java.io.Serializable {
+public class Message implements java.io.Serializable {
+
+	private static final long serialVersionUID = 7034732076283473442L;
 
 	private boolean success = false;
 

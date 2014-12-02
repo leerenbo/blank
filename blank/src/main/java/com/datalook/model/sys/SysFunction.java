@@ -24,7 +24,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 public class SysFunction implements java.io.Serializable {
 
 	// Fields
-
 	private Integer id;
 	@JSONField(serialize=false)
 	private SysFunction sysFunction;
@@ -35,11 +34,8 @@ public class SysFunction implements java.io.Serializable {
 	private String iconCls;
 	private String img;
 	private Integer pid;
-	@JSONField(serialize=false)
 	private Set<SysOperationLog> sysOperationLogs = new HashSet<SysOperationLog>(0);
-	@JSONField(name="children")
 	private Set<SysFunction> sysFunctions = new HashSet<SysFunction>(0);
-	@JSONField(serialize=false)
 	private Set<SysRole> sysRoles = new HashSet<SysRole>(0);
 
 	// Constructors

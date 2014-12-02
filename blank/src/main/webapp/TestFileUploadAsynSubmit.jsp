@@ -7,21 +7,18 @@
 <script type="text/javascript">
 $(function () {
 	$('#ff').form({
-		url : datalook.contextPath + '/test!noSySn_upload.action',
+		url : ez.contextPath + '/test!noSySn_upload.action',
 	    onSubmit: function(){
-	    	alert(0);
 	        // do some check
 	        // return false to prevent submit;
 	        return true;
 	    },
 	    success:function(data){
 	    	console.info(data);
-	        alert(1);
 	    }
 	});
 })
 function aa(){
-	alert(2);
 	$('#ff').submit();
 }
 </script>

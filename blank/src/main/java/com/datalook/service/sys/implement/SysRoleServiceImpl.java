@@ -10,9 +10,6 @@ import com.datalook.util.base.StringUtil;
 @Service("sysRoleService")
 public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysRoleService{
 
-	/* (non-Javadoc)
-	 * @see com.datalook.service.sys.ISysRoleService#grant(java.lang.String, java.lang.String[], java.lang.String[])
-	 */
 	@Override
 	public synchronized void grant(String sysRoleId,String grantSysFunctionIds[],String inSomeSysFunctionIds[]){
 		getBaseDao().executeSql(StringUtil.formateString("delete SYS_ROLE_FUNCTION_RELATION where ROLEID = {0} and SYSFUNCTIONID in {1} ",sysRoleId,StringUtil.toVarcharsSqlInString(inSomeSysFunctionIds)));

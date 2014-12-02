@@ -1,5 +1,5 @@
-var sy = sy || {};
-sy.data = sy.data || {};// 用于存放临时的数据或者对象
+var ez = ez || {};
+ez.data = ez.data || {};// 用于存放临时的数据或者对象
 
 /**
  * 屏蔽右键
@@ -28,9 +28,9 @@ $(document).bind('selectstart', function() {
  * 
  * 增加命名空间功能
  * 
- * 使用方法：sy.ns('jQuery.bbb.ccc','jQuery.eee.fff');
+ * 使用方法：ez.ns('jQuery.bbb.ccc','jQuery.eee.fff');
  */
-sy.ns = function() {
+ez.ns = function() {
 	var o = {}, d;
 	for (var i = 0; i < arguments.length; i++) {
 		d = arguments[i].split(".");
@@ -45,7 +45,7 @@ sy.ns = function() {
 /**
  * 将form表单元素的值序列化成对象
  * 
- * @example sy.serializeObject($('#formId'))
+ * @example ez.serializeObject($('#formId'))
  * 
  * @author 孙宇
  * 
@@ -53,7 +53,7 @@ sy.ns = function() {
  * 
  * @returns object
  */
-sy.serializeObject = function(form) {
+ez.serializeObject = function(form) {
 	var o = {};
 	$.each(form.serializeArray(), function(index) {
 		if (this['value'] != undefined && this['value'].length > 0) {// 如果表单项的值非空，才进行序列化操作
@@ -72,11 +72,11 @@ sy.serializeObject = function(form) {
  * 
  * @author 孙宇
  * 
- * @example sy.formatString('字符串{0}字符串{1}字符串','第一个变量','第二个变量');
+ * @example ez.formatString('字符串{0}字符串{1}字符串','第一个变量','第二个变量');
  * 
  * @returns 格式化后的字符串
  */
-sy.formatString = function(str) {
+ez.formatString = function(str) {
 	for (var i = 0; i < arguments.length - 1; i++) {
 		str = str.replace("{" + i + "}", arguments[i + 1]);
 	}
@@ -90,7 +90,7 @@ sy.formatString = function(str) {
  * 
  * @returns list
  */
-sy.stringToList = function(value) {
+ez.stringToList = function(value) {
 	if (value != undefined && value != '') {
 		var values = [];
 		var t = value.split(',');
@@ -108,21 +108,21 @@ sy.stringToList = function(value) {
  * @param o
  * @returns
  */
-sy.jsonToString = function(o) {
+ez.jsonToString = function(o) {
 	var r = [];
 	if (typeof o == "string")
 		return "\"" + o.replace(/([\'\"\\])/g, "\\$1").replace(/(\n)/g, "\\n").replace(/(\r)/g, "\\r").replace(/(\t)/g, "\\t") + "\"";
 	if (typeof o == "object") {
 		if (!o.sort) {
 			for ( var i in o)
-				r.push(i + ":" + sy.jsonToString(o[i]));
+				r.push("\"data."+i + "\":" + ez.jsonToString(o[i]));
 			if (!!document.all && !/^\n?function\s*toString\(\)\s*\{\n?\s*\[native code\]\n?\s*\}\n?\s*$/.test(o.toString)) {
 				r.push("toString:" + o.toString.toString());
 			}
 			r = "{" + r.join() + "}";
 		} else {
 			for (var i = 0; i < o.length; i++)
-				r.push(sy.jsonToString(o[i]));
+				r.push(ez.jsonToString(o[i]));
 			r = "[" + r.join() + "]";
 		}
 		return r;
@@ -133,13 +133,13 @@ sy.jsonToString = function(o) {
 /**
  * Create a cookie with the given key and value and other optional parameters.
  * 
- * @example sy.cookie('the_cookie', 'the_value');
+ * @example ez.cookie('the_cookie', 'the_value');
  * @desc Set the value of a cookie.
- * @example sy.cookie('the_cookie', 'the_value', { expires: 7, path: '/', domain: 'jquery.com', secure: true });
+ * @example ez.cookie('the_cookie', 'the_value', { expires: 7, path: '/', domain: 'jquery.com', secure: true });
  * @desc Create a cookie with all available options.
- * @example sy.cookie('the_cookie', 'the_value');
+ * @example ez.cookie('the_cookie', 'the_value');
  * @desc Create a session cookie.
- * @example sy.cookie('the_cookie', null);
+ * @example ez.cookie('the_cookie', null);
  * @desc Delete a cookie by passing null as value. Keep in mind that you have to use the same path and domain used when the cookie was set.
  * 
  * @param String
@@ -154,13 +154,13 @@ sy.jsonToString = function(o) {
  * @option Boolean secure If true, the secure attribute of the cookie will be set and the cookie transmission will require a secure protocol (like HTTPS).
  * @type undefined
  * 
- * @name sy.cookie
+ * @name ez.cookie
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  * 
  * Get the value of a cookie with the given key.
  * 
- * @example sy.cookie('the_cookie');
+ * @example ez.cookie('the_cookie');
  * @desc Get the value of a cookie.
  * 
  * @param String
@@ -168,11 +168,11 @@ sy.jsonToString = function(o) {
  * @return The value of the cookie.
  * @type String
  * 
- * @name sy.cookie
+ * @name ez.cookie
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
-sy.cookie = function(key, value, options) {
+ez.cookie = function(key, value, options) {
 	if (arguments.length > 1 && (value === null || typeof value !== "object")) {
 		options = $.extend({}, options);
 		if (value === null) {
@@ -236,5 +236,5 @@ Date.prototype.Format = function (fmt) {
  * @requires jQuery
  */
 $(function() {
-	$('.iconImg').attr('src', sy.pixel_0);
+	$('.iconImg').attr('src', ez.pixel_0);
 });

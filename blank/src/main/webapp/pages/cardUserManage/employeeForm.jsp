@@ -69,7 +69,7 @@
 					/* --------------新政员工档案信息-------------- */
 					url = datalook.contextPath + '/employee!save.action';
 				}
-				$.post(url, sy.serializeObject($('form')), function(result) {
+				$.post(url, ez.serializeObject($('form')), function(result) {
 					if (result.success) {
 						$pjq.messager.alert('提示', result.msg, 'info');
 						$grid.datagrid('load');

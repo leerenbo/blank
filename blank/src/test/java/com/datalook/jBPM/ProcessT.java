@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class) 
 @ContextConfiguration(locations={"classpath:applicationContext.xml","classpath:jBPM6.xml"}) 
-public class ProcessTest extends JbpmJUnitBaseTestCase {
+public class ProcessT extends JbpmJUnitBaseTestCase {
 
 	@Resource(name="runtimeManager")
 	RuntimeManager runtimeManager;

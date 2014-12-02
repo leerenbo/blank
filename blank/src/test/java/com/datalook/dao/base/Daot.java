@@ -3,6 +3,7 @@ package com.datalook.dao.base;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.enterprise.inject.New;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.datalook.model.sys.SysUser;
 import com.datalook.service.base.BaseService;
+import com.google.common.hash.HashCode;
 
 @RunWith(SpringJUnit4ClassRunner.class) 
 @ContextConfiguration(locations={"classpath:/applicationContext.xml"}) 
@@ -61,6 +63,4 @@ public class Daot extends AbstractTransactionalJUnit4SpringContextTests {
 		Long l=locationDao.getLong("select count(*) from Location h join h.kqPoses k where h.id=1 and k.status=0");
 		System.out.println(l);
 	}
-
-
 }

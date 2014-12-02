@@ -1,5 +1,4 @@
-var sy = sy || {};
-var lrb = lrb || {};
+var ez = ez || {};
 
 /**
  * 更改easyui加载panel时的提示文字
@@ -61,7 +60,7 @@ $.extend($.fn.panel.defaults, {
  * 
  * @requires jQuery,EasyUI
  */
-sy.onMove = {
+ez.onMove = {
 	onMove : function(left, top) {
 		var l = left;
 		var t = top;
@@ -89,9 +88,9 @@ sy.onMove = {
 		});
 	}
 };
-$.extend($.fn.dialog.defaults, sy.onMove);
-$.extend($.fn.window.defaults, sy.onMove);
-$.extend($.fn.panel.defaults, sy.onMove);
+$.extend($.fn.dialog.defaults, ez.onMove);
+$.extend($.fn.window.defaults, ez.onMove);
+$.extend($.fn.panel.defaults, ez.onMove);
 
 /**
  * 
@@ -103,7 +102,7 @@ $.extend($.fn.panel.defaults, sy.onMove);
  * 
  * @requires jQuery,EasyUI
  */
-sy.onLoadError = {
+ez.onLoadError = {
 	onLoadError : function(XMLHttpRequest) {
 		if (parent.$ && parent.$.messager) {
 			parent.$.messager.progress('close');
@@ -114,12 +113,12 @@ sy.onLoadError = {
 		}
 	}
 };
-$.extend($.fn.datagrid.defaults, sy.onLoadError);
-$.extend($.fn.treegrid.defaults, sy.onLoadError);
-$.extend($.fn.tree.defaults, sy.onLoadError);
-$.extend($.fn.combogrid.defaults, sy.onLoadError);
-$.extend($.fn.combobox.defaults, sy.onLoadError);
-$.extend($.fn.form.defaults, sy.onLoadError);
+$.extend($.fn.datagrid.defaults, ez.onLoadError);
+$.extend($.fn.treegrid.defaults, ez.onLoadError);
+$.extend($.fn.tree.defaults, ez.onLoadError);
+$.extend($.fn.combogrid.defaults, ez.onLoadError);
+$.extend($.fn.combobox.defaults, ez.onLoadError);
+$.extend($.fn.form.defaults, ez.onLoadError);
 
 /**
  * 扩展combobox在自动补全模式时，检查用户输入的字符是否存在于下拉框中，如果不存在则清空用户输入
@@ -224,7 +223,7 @@ $.extend($.fn.validatebox.defaults.rules, {
  * @requires jQuery,EasyUI
  * 
  */
-sy.loadFilter = {
+ez.loadFilter = {
 	loadFilter : function(data, parent) {
 		var opt = $(this).data().tree.options;
 		var idField, textField, parentField;
@@ -252,8 +251,8 @@ sy.loadFilter = {
 		return data;
 	}
 };
-$.extend($.fn.combotree.defaults, sy.loadFilter);
-$.extend($.fn.tree.defaults, sy.loadFilter);
+$.extend($.fn.combotree.defaults, ez.loadFilter);
+$.extend($.fn.tree.defaults, ez.loadFilter);
 
 /**
  * 扩展treegrid，使其支持平滑数据格式
@@ -300,7 +299,7 @@ $.extend($.fn.treegrid.defaults, {
  * @requires jQuery,EasyUI
  * 
  */
-sy.modalDialog = function(options) {
+ez.modalDialog = function(options) {
 	var opts = $.extend({
 		title : '&nbsp;',
 		width : 640,
@@ -324,7 +323,7 @@ sy.modalDialog = function(options) {
  * @requires jQuery,EasyUI
  * @param themeName
  */
-sy.changeTheme = function(themeName) {
+ez.changeTheme = function(themeName) {
 	var $easyuiTheme = $('#easyuiTheme');
 	var url = $easyuiTheme.attr('href');
 	var href = url.substring(0, url.indexOf('themes')) + 'themes/' + themeName + '/easyui.css';
@@ -345,13 +344,13 @@ sy.changeTheme = function(themeName) {
 		}
 	}
 
-	sy.cookie('easyuiTheme', themeName, {
+	ez.cookie('easyuiTheme', themeName, {
 		expires : 7
 	});
 };
 
 changeStyle = function(style) {
-	sy.cookie('easyuiStyle', style, {
+	ez.cookie('easyuiStyle', style, {
 		expires : 7
 	});
 };
@@ -362,7 +361,7 @@ changeStyle = function(style) {
  * @author 孙宇
  * @requires jQuery,EasyUI
  */
-sy.progressBar = function(options) {
+ez.progressBar = function(options) {
 	if (typeof options == 'string') {
 		if (options == 'close') {
 			$('#syProgressBarDiv').dialog('destroy');
@@ -389,34 +388,34 @@ sy.progressBar = function(options) {
 };
 
 /* ---------------扩展easyUI小数校验start--------------- */
-//最大不能超过999999999
+// 最大不能超过999999999
 $.extend($.fn.validatebox.defaults.rules, {
 	chkFloat : {
-        validator: function(value, param){
-        	var pattern = /^[0-9]{0,8}\.\d{1}$/;       
-        	if (!pattern.exec(value)) {
-        	    return;
-        	}
-        	var val = new Number(value);
-        	var par = new Number(param[0]);
-            return val <= par;
-        },
-        message : '请输入正确的格式的数值（x.x），且不能超过99999999小时'
-    }
+		validator : function(value, param) {
+			var pattern = /^[0-9]{0,8}\.\d{1}$/;
+			if (!pattern.exec(value)) {
+				return;
+			}
+			var val = new Number(value);
+			var par = new Number(param[0]);
+			return val <= par;
+		},
+		message : '请输入正确的格式的数值（x.x），且不能超过99999999小时'
+	}
 });
 /* ---------------扩展easyUI小数校验end--------------- */
 
 /* ---------------验证数字或字母或组合start--------------- */
 $.extend($.fn.validatebox.defaults.rules, {
 	chkCharAndNum : {
-		validator: function(value, param){
-			var pattern = /^[0-9a-zA-Z]{1,}$/; 
+		validator : function(value, param) {
+			var pattern = /^[0-9a-zA-Z]{1,}$/;
 			if (!pattern.exec(value)) {
-        	    return;
-        	}
+				return;
+			}
 			return value.length <= param[0];
 		},
-      	message : '必须是字母或数字，并且长度不能超过{0}个字符'
+		message : '必须是字母或数字，并且长度不能超过{0}个字符'
 	}
 });
 /* ---------------验证数字或字母或组合end--------------- */
@@ -424,13 +423,89 @@ $.extend($.fn.validatebox.defaults.rules, {
 /* ---------------验证汉字或字母或组合start--------------- */
 $.extend($.fn.validatebox.defaults.rules, {
 	chkCharAndChinese : {
-		validator: function(value){
-			var pattern = /^[\u4e00-\u9fa5a-zA-Z]{1,16}$/;       
+		validator : function(value) {
+			var pattern = /^[\u4e00-\u9fa5a-zA-Z]{1,16}$/;
 			return pattern.exec(value);
-      	
+
 		},
 		message : '必须是字母或汉字，并且长度不能超过16个字符'
 	}
 });
 /* ---------------验证汉字或字母或组合end--------------- */
 
+/**
+ * 所有选中行，依次调用参数中的方法 by李仁博
+ */
+$.extend($.fn.datagrid.methods, {
+	ezCheckedInvoke : function(ezgrid, param) {
+		var rows = ezgrid.datagrid('getChecked');
+		for (var i = 0; i < rows.length; i++) {
+			eval(param + '(rows[i])')
+		}
+		ezgrid.datagrid('clearChecked');
+	}
+});
+
+/**
+ * 所有选中行，依次展开 by李仁博
+ */
+$.extend($.fn.treegrid.methods, {
+	ezCheckedCollapse : function(ezgrid) {
+		var rows = ezgrid.treegrid('getChecked');
+		if (rows.length == 0) {
+			ezgrid.treegrid('collapseAll');
+		}
+		for (var i = 0; i < rows.length; i++) {
+			ezgrid.treegrid('collapseAll', rows[i].id);
+		}
+		ezgrid.datagrid('clearChecked');
+	}
+});
+
+/**
+ * 所有选中行，依次折叠 by李仁博
+ */
+$.extend($.fn.treegrid.methods, {
+	ezCheckedExpand : function(ezgrid) {
+		var rows = ezgrid.treegrid('getChecked');
+		if (rows.length == 0) {
+			ezgrid.treegrid('expandAll');
+		}
+		for (var i = 0; i < rows.length; i++) {
+			ezgrid.treegrid('expandAll', rows[i].id);
+		}
+		ezgrid.datagrid('clearChecked');
+	}
+});
+
+ez.urlSysDictMap = ez.urlSysDictMap || new Map();
+
+ez.loadSysDict = function(location) {
+	var data = ez.urlSysDictMap.get(location);
+	if (data == undefined) {
+		$.ajax({
+			type : "post",
+			dataType : "json",
+			async : false,// 同步
+			url : ez.contextPath + '/sysDict!noSy_find.action',
+			data : {
+				'hqland_location_dengyu_String' : location
+			},
+			success : function(result) {
+				ez.urlSysDictMap.put(location, result);
+				data = result;
+			}
+		});
+	}
+	return data;
+}
+
+ez.columnsFomatter = function(value, row, location) {
+	var sysDicts = ez.loadSysDict(location);
+	for(var i=0;i<sysDicts.length;i++){
+		if(sysDicts[i].value==value){
+			return sysDicts[i].text; 
+		}
+	}
+	return value;
+}
