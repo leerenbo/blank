@@ -1,9 +1,6 @@
 package com.datalook.model.sys;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,9 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import com.datalook.model.comparator.SysFunctionSeqComparator;
 
 /**
  * SysRole entity. @author MyEclipse Persistence Tools
@@ -28,7 +22,7 @@ import com.datalook.model.comparator.SysFunctionSeqComparator;
 public class SysRole implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = 5793710045580501552L;
 	private Integer id;
 	private String rolename;
 	private Short seq;

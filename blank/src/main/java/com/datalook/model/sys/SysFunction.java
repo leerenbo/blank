@@ -23,6 +23,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 @Table(name = "SYS_FUNCTION")
 public class SysFunction implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	// Fields
 	private Integer id;
 	@JSONField(serialize=false)

@@ -1,6 +1,5 @@
 package com.datalook.action.base;
 
-
 import java.io.File;
 
 import javax.annotation.Resource;
@@ -11,15 +10,16 @@ import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
 
-@Action(value="test")
-public class TestAction extends BaseAction<Object>{
+@Action(value = "test")
+public class TestAction extends BaseAction<Object> {
 
+	private static final long serialVersionUID = -3802238894463370625L;
 	private File image;
-    private String imageFileName; //文件名称
-    private String imageContentType; //文件类型
-    private String content;
-    
-	@Resource(name="runtimeManager")
+	private String imageFileName; // 文件名称
+	private String imageContentType; // 文件类型
+	private String content;
+
+	@Resource(name = "runtimeManager")
 	RuntimeManager runtimeManager;
 
 	public String getContent() {
@@ -54,13 +54,16 @@ public class TestAction extends BaseAction<Object>{
 		this.image = image;
 	}
 
-	public void noSySn_upload(){
+	public void noSySn_upload() {
 		System.out.println(image.toString());
 	}
-	public void noSySn_ueditor(){
+
+	public void noSySn_ueditor() {
 		System.out.println(content);
 	}
-	public void noSySn_noSe_jbpm(){
+
+	@SuppressWarnings("unused")
+	public void noSySn_noSe_jbpm() {
 		RuntimeEngine engine = runtimeManager.getRuntimeEngine(null);
 		KieSession ksession = engine.getKieSession();
 

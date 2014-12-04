@@ -138,7 +138,7 @@ public interface BaseService<T> {
 	 *            SQL语句
 	 * @return 结果集
 	 */
-	public List findBySql(String sql);
+	public List<Object[]> findBySql(String sql);
 
 	/**
 	 * 获得结果集
@@ -151,7 +151,7 @@ public interface BaseService<T> {
 	 *            每页显示多少条
 	 * @return 结果集
 	 */
-	public List findBySql(String sql, int page, int rows);
+	public List<Object[]> findBySql(String sql, int page, int rows);
 
 	/**
 	 * 获得结果集
@@ -162,7 +162,7 @@ public interface BaseService<T> {
 	 *            参数
 	 * @return 结果集
 	 */
-	public List findBySql(String sql, Map<String, Object> params);
+	public List<Object[]> findBySql(String sql, Map<String, Object> params);
 
 	/**
 	 * 获得结果集
@@ -177,7 +177,7 @@ public interface BaseService<T> {
 	 *            每页显示多少条
 	 * @return 结果集
 	 */
-	public List findBySql(String sql, Map<String, Object> params, int page, int rows);
+	public List<Object[]> findBySql(String sql, Map<String, Object> params, int page, int rows);
 
 	public List<Object> findBySQLFilter(HqlFilter hqlFilter);
 
@@ -205,7 +205,7 @@ public interface BaseService<T> {
 	 */
 	public T getByHql(String hql, Map<String, Object> params);
 
-	public T getById(Class c, Object id);
+	public T getById(Class<?> c, Object id);
 
 	/**
 	 * 通过主键获得对象

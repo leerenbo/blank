@@ -1,13 +1,10 @@
 package com.datalook.action.sys;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.reflect.FieldUtils;
-import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.struts2.convention.annotation.Action;
 
 import com.datalook.action.base.BaseAction;
@@ -20,7 +17,7 @@ import com.datalook.service.sys.SysRoleService;
 @Action("sysRole")
 public class SysRoleAction extends BaseAction<SysRole> {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8187753885200063063L;
 	@Resource(name = "sysFunctionService")
 	BaseService<SysFunction> sysFunctionService;
 
@@ -34,6 +31,7 @@ public class SysRoleAction extends BaseAction<SysRole> {
 	 * 
 	 * @author ：lirenbo
 	 */
+	@SuppressWarnings("unused")
 	public void grantSysFunction() {
 		Message re = new Message();
 		List<SysFunction> nowUserFunctions = getSessionInfo().getAllFunction();

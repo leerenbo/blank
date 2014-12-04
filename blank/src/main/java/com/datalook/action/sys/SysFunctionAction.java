@@ -1,22 +1,18 @@
 package com.datalook.action.sys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.datalook.action.base.BaseAction;
-import com.datalook.exception.base.ToWebException;
 import com.datalook.model.sys.SysFunction;
 import com.datalook.model.sys.easyui.Message;
 import com.datalook.model.sys.web.SessionInfo;
 import com.datalook.service.base.BaseService;
-import com.datalook.service.sys.SysFunctionService;
 
 /**
  * 
@@ -28,8 +24,8 @@ import com.datalook.service.sys.SysFunctionService;
 @Action("sysFunction")
 @Results({ @Result(name = "makeMenu", location = "/pages/west.jsp") })
 public class SysFunctionAction extends BaseAction<SysFunction> {
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = -1212028577583528732L;
 	List<SysFunction> functions;
 
 	@Resource(name = "sysFunctionService")

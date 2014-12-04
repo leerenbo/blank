@@ -1,11 +1,8 @@
 package com.datalook.action.sys;
 
-
-import java.io.File;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
@@ -18,22 +15,21 @@ import com.datalook.model.sys.easyui.Message;
 import com.datalook.model.sys.web.SessionInfo;
 import com.datalook.service.sys.SysUserService;
 import com.datalook.util.base.ConfigUtil;
-import com.datalook.util.base.CookieUtil;
 import com.datalook.util.base.MD5Util;
 
 /**
  * 
- * 功能描述：
- * 时间：2014年9月11日
+ * 功能描述： 时间：2014年9月11日
+ * 
  * @author ：lirenbo
  *
  */
 @Action("sysUser")
 public class SysUserAction extends BaseAction<SysUser> {
-	
-	private static final long serialVersionUID = 1L;
-	
-	@Resource(name="sysUserService")
+
+	private static final long serialVersionUID = 6254159754392240588L;
+
+	@Resource(name = "sysUserService")
 	public void setService(SysUserService service) {
 		this.service = service;
 	}
@@ -41,8 +37,7 @@ public class SysUserAction extends BaseAction<SysUser> {
 	/**
 	 * @see com.datalook.action.sys.ISysUserAction#noSnSy_logout()
 	 * 
-	 * 功能描述：
-	 * 时间：2014年9月29日
+	 *      功能描述： 时间：2014年9月29日
 	 * @author: lirenbo
 	 */
 	public void noSnSy_logout() {
@@ -57,15 +52,14 @@ public class SysUserAction extends BaseAction<SysUser> {
 	/**
 	 * @see com.datalook.action.sys.ISysUserAction#noSnSy_login()
 	 * 
-	 * 功能描述：
-	 * 时间：2014年9月29日
+	 *      功能描述： 时间：2014年9月29日
 	 * @author: lirenbo
 	 */
 	public void noSnSy_login() {
 		data.setPassword(MD5Util.md5(data.getPassword()));
 		SysUser sysUser = service.getByProperties(data);
 		Message json = new Message();
-		if (sysUser != null&&"1".equals(sysUser.getStatus())) {
+		if (sysUser != null && "1".equals(sysUser.getStatus())) {
 			json.setSuccess(true);
 			SessionInfo sessionInfo = new SessionInfo();
 			Hibernate.initialize(sysUser.getSysRoles());
@@ -79,7 +73,7 @@ public class SysUserAction extends BaseAction<SysUser> {
 		}
 		writeJson(json);
 	}
-	
+
 	public void noSy_updateCurrentUserPassword() {
 		SessionInfo sessionInfo = getSessionInfo();
 		Message json = new Message();
@@ -92,13 +86,13 @@ public class SysUserAction extends BaseAction<SysUser> {
 		json.setMsg("密码修改成功");
 		writeJson(json);
 	}
-	
+
 	public void noSy_checkCurrentUserPassword() {
 		SessionInfo sessionInfo = getSessionInfo();
 		SysUser user = sessionInfo.getSysUser();
-		if(StringUtils.equals(MD5Util.md5(data.getPassword()),user.getPassword())){
+		if (StringUtils.equals(MD5Util.md5(data.getPassword()), user.getPassword())) {
 			writeJson(true);
-		}else{
+		} else {
 			writeJson(false);
 		}
 	}
@@ -106,8 +100,7 @@ public class SysUserAction extends BaseAction<SysUser> {
 	/**
 	 * @see com.datalook.action.sys.ISysUserAction#grantSysRole()
 	 * 
-	 * 功能描述：
-	 * 时间：2014年9月29日
+	 *      功能描述： 时间：2014年9月29日
 	 * @author: lirenbo
 	 */
 	public void grantSysRole() {
@@ -117,14 +110,13 @@ public class SysUserAction extends BaseAction<SysUser> {
 		json.setMsg("授权成功");
 		writeJson(json);
 	}
-	
+
 	/**
 	 * @see com.datalook.action.sys.ISysUserAction#noSy_getRolesByUserId()
 	 * 
-	 * 功能描述：
-	 * 时间：2014年9月29日
+	 *      功能描述： 时间：2014年9月29日
 	 * @author: lirenbo
-	 * @throws IllegalAccessException 
+	 * @throws IllegalAccessException
 	 */
 	public void noSy_getRolesByUserId() throws IllegalAccessException {
 		writeJson(service.getById(data.getId()).getSysRoles());
@@ -133,10 +125,10 @@ public class SysUserAction extends BaseAction<SysUser> {
 	@Override
 	protected Message beforeSave() {
 		Message json = new Message();
-		SysUser s=new SysUser();
+		SysUser s = new SysUser();
 		s.setUsername(data.getUsername());
-		List<SysUser> users =  service.findByProperties(s);
-		if (users.size() !=0 ) {
+		List<SysUser> users = service.findByProperties(s);
+		if (users.size() != 0) {
 			json.setMsg("新建用户失败，用户已存在！");
 		} else {
 			data.setPassword(MD5Util.md5("123456"));
@@ -149,10 +141,10 @@ public class SysUserAction extends BaseAction<SysUser> {
 	@Override
 	protected Message beforeUpdate() {
 		Message json = new Message();
-		SysUser s=new SysUser();
+		SysUser s = new SysUser();
 		s.setUsername(data.getUsername());
-		List<SysUser> users =  service.findByProperties(s);
-		if (users.size() !=0 ) {
+		List<SysUser> users = service.findByProperties(s);
+		if (users.size() != 0) {
 			json.setMsg("修改用户失败，用户已存在！");
 		} else {
 			json.setSuccess(true);

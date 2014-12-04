@@ -33,7 +33,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 	 * @return
 	 */
     public static Map<String ,Object> toMapWithoutCollection(Object bean){
-        Class type = bean.getClass();
+        Class<? extends Object> type = bean.getClass();
         Map<String, Object> returnMap = new HashMap<String, Object>();
         BeanInfo beanInfo=null;
 		try {
@@ -74,7 +74,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
      * @return
      */
     public static Map<String ,Object> toMapWithCollection(Object bean){
-        Class type = bean.getClass();
+        Class<? extends Object> type = bean.getClass();
         Map<String, Object> returnMap = new HashMap<String, Object>();
         BeanInfo beanInfo=null;
 		try {
@@ -115,7 +115,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
      * @param map
      * @return
      */
-    public static Object mapToBean(Class type, Map map){
+    public static Object mapToBean(Class<?> type, Map<?, ?> map){
         BeanInfo beanInfo = null;
 		try {
 			beanInfo = Introspector.getBeanInfo(type);
@@ -215,22 +215,22 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 						if (value != null || readMethod.getReturnType().getName().equals("java.lang.String") ) {// 这里判断以下value是否为空，当然这里也能进行一些特殊要求的处理 例如绑定时格式转换等等，如果是String类型，则不需要验证是否为空 
 							boolean isEmpty = false;
 							if (value instanceof Set) {
-								Set s = (Set) value;
+								Set<?> s = (Set<?>) value;
 								if (s == null || s.isEmpty()) {
 									isEmpty = true;
 								}
 							} else if (value instanceof Map) {
-								Map m = (Map) value;
+								Map<?, ?> m = (Map<?, ?>) value;
 								if (m == null || m.isEmpty()) {
 									isEmpty = true;
 								}
 							} else if (value instanceof List) {
-								List l = (List) value;
+								List<?> l = (List<?>) value;
 								if (l == null || l.size() < 1) {
 									isEmpty = true;
 								}
 							} else if (value instanceof Collection) {
-								Collection c = (Collection) value;
+								Collection<?> c = (Collection<?>) value;
 								if (c == null || c.size() < 1) {
 									isEmpty = true;
 								}

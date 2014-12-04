@@ -3,6 +3,7 @@ package com.datalook.exception.base;
 
 public class ToWebException extends Exception{
 
+	private static final long serialVersionUID = -4641419729467488075L;
 	private String code;
 	private String message;
 	

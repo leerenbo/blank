@@ -149,9 +149,9 @@ public class HqlFilter {
 
 	private void makesortorder() {
 		if (!StringUtils.isBlank(sort) && !StringUtils.isBlank(order)) {
-			if (sort.indexOf(".") < 1) {
-				sort = sort;
-			}
+//			if (sort.indexOf(".") < 1) {
+//				sort = sort;
+//			}
 			orderAndSortStr=" order by " + sort + " " + order + " ";// 添加排序信息
 		} else {
 			if (request != null) {
@@ -164,9 +164,9 @@ public class HqlFilter {
 					order = o;
 				}
 				if (!StringUtils.isBlank(sort) && !StringUtils.isBlank(order)) {
-					if (sort.indexOf(".") < 1) {
-						sort = sort;
-					}
+//					if (sort.indexOf(".") < 1) {
+//						sort = sort;
+//					}
 					orderAndSortStr=" order by " + sort + " " + order + " ";// 添加排序信息
 				}
 			}
@@ -313,7 +313,6 @@ public class HqlFilter {
 			}
 			if(StringUtils.equalsIgnoreCase(operator, "in")){
 				 String[] strs = value.split("\\|");
-				 ArrayList<String> re=new ArrayList<String>();
 				 return Arrays.asList(strs);
 			}
 			return value;

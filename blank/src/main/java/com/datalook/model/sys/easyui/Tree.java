@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Tree implements java.io.Serializable {
 
+	private static final long serialVersionUID = -2631903253111783342L;
 	private String id;
 	private String text;
 	private String state = "open";// open,closed

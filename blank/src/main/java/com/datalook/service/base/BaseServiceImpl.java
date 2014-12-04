@@ -1,24 +1,18 @@
 package com.datalook.service.base;
 
-import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.StringUtils;
-import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
 import com.datalook.dao.base.HqlFilter;
 import com.datalook.dao.base.IBaseDao;
 import com.datalook.dao.base.SqlBeanGenerater;
 import com.datalook.util.base.GenericsUtils;
-import com.datalook.util.base.LogUtil;
 
 /**
  * 
@@ -27,6 +21,7 @@ import com.datalook.util.base.LogUtil;
  * @author ：lirenbo
  * 
  */
+@SuppressWarnings("unchecked")
 @Service("baseService")
 public class BaseServiceImpl<T> implements BaseService<T> {
 
@@ -162,22 +157,22 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	@Override
-	public List findBySql(String sql) {
+	public List<Object[]> findBySql(String sql) {
 		return baseDao.findBySql(sql);
 	}
 
 	@Override
-	public List findBySql(String sql, int page, int rows) {
+	public List<Object[]> findBySql(String sql, int page, int rows) {
 		return baseDao.findBySql(sql, page, rows);
 	}
 
 	@Override
-	public List findBySql(String sql, Map<String, Object> params) {
+	public List<Object[]> findBySql(String sql, Map<String, Object> params) {
 		return baseDao.findBySql(sql, params);
 	}
 
 	@Override
-	public List findBySql(String sql, Map<String, Object> params, int page, int rows) {
+	public List<Object[]> findBySql(String sql, Map<String, Object> params, int page, int rows) {
 		return baseDao.findBySql(sql, params, page, rows);
 	}
 
@@ -186,7 +181,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 			List<Object[]> los = baseDao.findBySql(hqlFilter.getSqlwithOrder(), hqlFilter.getParams());
 			return SqlBeanGenerater.generateBySqlList(hqlFilter.getSqlwithOrder(), los);
 		}
-		return new ArrayList();
+		return new ArrayList<Object>();
 	}
 
 	public List<Object> findBySQLFilter(HqlFilter hqlFilter, int page, int rows) {
@@ -194,7 +189,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 			List<Object[]> los = baseDao.findBySql(hqlFilter.getSqlwithOrder(), hqlFilter.getParams(), page, rows);
 			return SqlBeanGenerater.generateBySqlList(hqlFilter.getSqlwithOrder(), los);
 		}
-		return new ArrayList();
+		return new ArrayList<Object>();
 	}
 
 	public IBaseDao<T> getBaseDao() {
@@ -212,7 +207,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	@Override
-	public T getById(Class c, Object id) {
+	public T getById(Class<?> c, Object id) {
 		return (T) baseDao.getById(c, id);
 	}
 
@@ -227,7 +222,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	 */
 	@Override
 	public T getById(Object id) {
-		Class c = GenericsUtils.getSuperClassGenricType(getClass());
+		Class<?> c = GenericsUtils.getSuperClassGenricType(getClass());
 		return (T) baseDao.getById(c, id);
 	}
 

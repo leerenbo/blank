@@ -70,8 +70,8 @@
 			}, {
 				width : '200',
 				title : '功能名称',
-				field : 'functionname'
-			} ] ],
+				field : 'functionname',
+			} ,] ],
 			columns : [ [ {
 				width : '200',
 				title : '图标路径',

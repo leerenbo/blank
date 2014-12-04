@@ -12,21 +12,22 @@ import com.datalook.service.base.BaseService;
 import com.datalook.service.sys.SysDictService;
 
 @Action("sysDict")
-public class SysDictAction extends BaseAction<SysDict>{
-	
-	@Resource(name="sysDictService")
+public class SysDictAction extends BaseAction<SysDict> {
+
+	private static final long serialVersionUID = -6096800284265571849L;
+
+	@Resource(name = "sysDictService")
 	public void setService(BaseService<SysDict> service) {
 		this.service = service;
 	}
-	
-	public void noSy_find(){
+
+	public void noSy_find() {
 		HqlFilter hqlFilter = new HqlFilter(getRequest());
-		((SysDictService)service).findValus("com.datalook.model.sys.functiontype");
-		if(!StringUtils.isBlank(hqlFilter.getSqltable())){
-			writeJson(((SysDictService)service).findValus(hqlFilter));
-		}else{
-			writeJson(((SysDictService)service).findValus(hqlFilter));
+		if (!StringUtils.isBlank(hqlFilter.getSqltable())) {
+			writeJson(((SysDictService) service).findValus(hqlFilter));
+		} else {
+			writeJson(((SysDictService) service).findValus(hqlFilter));
 		}
 	}
-	
+
 }

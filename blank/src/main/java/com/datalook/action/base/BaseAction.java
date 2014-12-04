@@ -44,7 +44,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @Action
 public class BaseAction<T> extends ActionSupport {
 	private static final long serialVersionUID = -8744267073413050746L;
- 
+
 	protected int page = 1;// 当前页
 	protected int rows = 10;// 每页显示记录数
 	protected String sort;// 排序字段
@@ -198,7 +198,7 @@ public class BaseAction<T> extends ActionSupport {
 		Object id;
 		id = FieldUtils.readDeclaredField(data, "id", true);
 		if (id != null) {
-			Class c = GenericsUtils.getSuperClassGenricType(getClass());
+			Class<?> c = GenericsUtils.getSuperClassGenricType(getClass());
 			writeJson(service.getById(c, id));
 		} else {
 			Message j = new Message();
@@ -225,7 +225,6 @@ public class BaseAction<T> extends ActionSupport {
 		writeJson(grid);
 	}
 
-	
 	public void datagridNoPage() {
 		Grid grid = new Grid();
 		HqlFilter hqlFilter = new HqlFilter(getRequest());
@@ -241,10 +240,10 @@ public class BaseAction<T> extends ActionSupport {
 		writeJson(grid);
 	}
 
-	
 	public void treegridNoPage() {
 		find();
 	}
+
 	public void find() {
 		HqlFilter hqlFilter = new HqlFilter(getRequest());
 		if (!StringUtils.isBlank(hqlFilter.getSqltable())) {
@@ -254,13 +253,13 @@ public class BaseAction<T> extends ActionSupport {
 		}
 	}
 
-	
 	protected Message beforeSave() {
 		Message json = new Message();
 		json.setSuccess(true);
 		json.setMsg("新建成功！");
 		return json;
 	}
+
 	public void save() {
 		Message json = beforeSave();
 		if (json == null) {
@@ -274,13 +273,13 @@ public class BaseAction<T> extends ActionSupport {
 		writeJson(json);
 	}
 
-	
 	protected Message beforeUpdate() {
 		Message json = new Message();
 		json.setSuccess(true);
 		json.setMsg("更新成功！");
 		return json;
 	}
+
 	public void update() throws IllegalAccessException {
 		Message json = beforeUpdate();
 		if (json == null) {
@@ -303,11 +302,12 @@ public class BaseAction<T> extends ActionSupport {
 	}
 
 	protected Message beforeDeleteByStatus() {
-		Message json=new Message();
+		Message json = new Message();
 		json.setSuccess(true);
 		json.setMsg("删除成功！");
 		return json;
 	}
+
 	public void deleteByStatus() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, NoSuchFieldException, SecurityException {
 		Message json = beforeDeleteByStatus();
 		if (json == null) {
@@ -337,16 +337,17 @@ public class BaseAction<T> extends ActionSupport {
 	}
 
 	protected Message beforeDeletePhysical() {
-		Message json=new Message();
+		Message json = new Message();
 		json.setSuccess(true);
 		json.setMsg("删除成功！");
 		return json;
 	}
+
 	public void deletePhysical() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, NoSuchFieldException, SecurityException {
 		Message json = beforeDeletePhysical();
 		if (json == null) {
 			LogUtil.error("不可以返回null的Message对象");
-		}else{
+		} else {
 			if (json.isSuccess()) {
 				if (ids != null) {
 					String[] idstrs = ids.split(",");
@@ -358,7 +359,7 @@ public class BaseAction<T> extends ActionSupport {
 							service.delete(t);
 						}
 					}
-				}else{
+				} else {
 					json.setSuccess(false);
 					json.setMsg("请选择要删除的数据");
 				}

@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.datalook</groupId>
 	<artifactId>blank</artifactId>
@@ -142,9 +141,7 @@
 			<artifactId>struts2-convention-plugin</artifactId>
 			<version>2.3.16.3</version>
 		</dependency>
-		<!-- 在 Struts2中要使用 Ajax获得Json数据。要使用Ajax必须引用此Jar <dependency> <groupId>org.apache.struts</groupId> 
-			<artifactId>struts2-json-plugin</artifactId> <version>2.3.16.3</version> 
-			</dependency> -->
+		<!-- 在 Struts2中要使用 Ajax获得Json数据。要使用Ajax必须引用此Jar <dependency> <groupId>org.apache.struts</groupId> <artifactId>struts2-json-plugin</artifactId> <version>2.3.16.3</version> </dependency> -->
 
 		<!-- Hibernate核心包 -->
 		<dependency>
@@ -159,8 +156,7 @@
 			<version>${hibernate.version}</version>
 
 		</dependency>
-		<!-- Oracle私有库驱动 <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc14</artifactId> 
-			<version>10.2.0.4.0</version> </dependency> -->
+		<!-- Oracle私有库驱动 <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc14</artifactId> <version>10.2.0.4.0</version> </dependency> -->
 		<!-- sql server驱动 -->
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
@@ -231,8 +227,7 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.8.1</version>
 		</dependency>
-		<!-- log4j日志包 <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> 
-			<version>1.2.17</version> </dependency> -->
+		<!-- log4j日志包 <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> <version>1.2.17</version> </dependency> -->
 		<!-- log4j2日志包 -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -250,8 +245,7 @@
 			<artifactId>log4j-1.2-api</artifactId>
 			<version>2.0.2</version>
 		</dependency>
-		<!-- c3p0连接池数据源 <dependency> <groupId>c3p0</groupId> <artifactId>c3p0</artifactId> 
-			<version>0.9.1.2</version> </dependency> -->
+		<!-- c3p0连接池数据源 <dependency> <groupId>c3p0</groupId> <artifactId>c3p0</artifactId> <version>0.9.1.2</version> </dependency> -->
 
 		<!-- 可以看到struts2应用里的Action等各种资源的影射情况 -->
 		<!-- 可以使用类似http://localhost:9999/sshe/config-browser/showConstants.action的url来访问 -->
@@ -340,6 +334,31 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>com.datalook</groupId>
+				<artifactId>ezui-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id></id>
+						<phase>test</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<inherited>false</inherited>
+						<configuration>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
@@ -368,10 +387,5 @@
 		</plugins>
 
 	</build>
-	<!-- <profiles> <profile> <id>sigar</id> <build> <plugins> <plugin> <groupId>org.codehaus.mojo</groupId> 
-		<artifactId>exec-maven-plugin</artifactId> <version>1.1.1</version> <executions> 
-		<execution> <phase>test</phase> <goals> <goal>java</goal> </goals> <configuration> 
-		<mainClass>com.datalook.util.base.SigarDemo</mainClass> <arguments> <argument>arg0</argument> 
-		<argument>arg1</argument> </arguments> </configuration> </execution> </executions> 
-		</plugin> </plugins> </build> </profile> </profiles> -->
+	<!-- <profiles> <profile> <id>sigar</id> <build> <plugins> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId> <version>1.1.1</version> <executions> <execution> <phase>test</phase> <goals> <goal>java</goal> </goals> <configuration> <mainClass>com.datalook.util.base.SigarDemo</mainClass> <arguments> <argument>arg0</argument> <argument>arg1</argument> </arguments> </configuration> </execution> </executions> </plugin> </plugins> </build> </profile> </profiles> -->
 </project>

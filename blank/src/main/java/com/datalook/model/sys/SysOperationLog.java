@@ -11,9 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 /**
  * SysOperationLog entity. @author MyEclipse Persistence Tools
  */
@@ -22,7 +19,7 @@ import org.hibernate.annotations.NotFoundAction;
 public class SysOperationLog implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = -7246643902904260550L;
 	private Integer id;
 	private SysFunction sysFunction;
 	private SysUser sysUser;

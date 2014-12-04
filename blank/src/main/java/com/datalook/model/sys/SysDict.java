@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -14,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "SYS_DICT")
 public class SysDict implements java.io.Serializable {
 
+	private static final long serialVersionUID = -2246244085151786686L;
 	// Fields
 	private Integer id;
 	private String location;

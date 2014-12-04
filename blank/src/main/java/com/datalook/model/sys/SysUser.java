@@ -23,7 +23,7 @@ import javax.persistence.Table;
 public class SysUser implements java.io.Serializable {
 
 	// Fields
-
+	private static final long serialVersionUID = -6537888910944690228L;
 	private Integer id;
 	private String realname;
 	private String username;

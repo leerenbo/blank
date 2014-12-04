@@ -133,11 +133,11 @@
 	<a href="javascript:void(0);" class="easyui-menubutton" data-options="menu:'#layout_north_zxMenu',iconCls:'ext-icon-disconnect'">注销</a>
 </div>
 <div id="layout_north_pfMenu" style="width: 120px; display: none;">
-
+<!-- 
 	<div onclick="changeStyle('check');" title="选项框风格">选项框风格</div>
 	<div onclick="changeStyle('icon');" title="图标风格">图标风格</div>
 
-	<div class="menu-sep"></div>
+	<div class="menu-sep"></div> -->
 
 	<div onclick="ez.changeTheme('default');" title="default">default</div>
 	<div onclick="ez.changeTheme('gray');" title="gray">gray</div>

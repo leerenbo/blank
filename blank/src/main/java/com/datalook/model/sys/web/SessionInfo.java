@@ -3,7 +3,6 @@ package com.datalook.model.sys.web;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +13,7 @@ import com.datalook.model.sys.SysUser;
 
 public class SessionInfo implements java.io.Serializable {
 
+	private static final long serialVersionUID = -5458866871688121825L;
 	private SysUser sysUser;
 	private List<SysFunction> allFunction;
 	

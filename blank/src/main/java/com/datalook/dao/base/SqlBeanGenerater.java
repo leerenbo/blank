@@ -61,7 +61,7 @@ public class SqlBeanGenerater {
 				sbph.getters[i]=StringUtil.addPrefix("get", names[i]);
 				sbph.setters[i]=StringUtil.addPrefix("set", names[i]);
 			}
-			sbph.clazz=(Class)sbph.bg.createClass();
+			sbph.clazz=(Class<?>)sbph.bg.createClass();
 			sbph.bk=BulkBean.create(sbph.clazz, sbph.getters, sbph.setters, sbph.types);
 			hmssbph.put(selectstr, sbph);
 		}
@@ -74,10 +74,10 @@ public class SqlBeanGenerater {
 
 class SqlBeanPlaceHolder{
 	BeanGenerator bg=new BeanGenerator();
-	Class clazz;
+	Class<?> clazz;
 	String getters[];
 	String setters[];
-	Class types[];
+	Class<?> types[];
 	BulkBean bk;
 }
 
