@@ -387,51 +387,104 @@ ez.progressBar = function(options) {
 	}
 };
 
-/* ---------------扩展easyUI小数校验start--------------- */
-// 最大不能超过999999999
-$.extend($.fn.validatebox.defaults.rules, {
-	chkFloat : {
-		validator : function(value, param) {
-			var pattern = /^[0-9]{0,8}\.\d{1}$/;
-			if (!pattern.exec(value)) {
-				return;
-			}
-			var val = new Number(value);
-			var par = new Number(param[0]);
-			return val <= par;
-		},
-		message : '请输入正确的格式的数值（x.x），且不能超过99999999小时'
-	}
-});
+/*
+ * ---------------扩展easyUI小数校验start--------------- // 最大不能超过999999999
+ * $.extend($.fn.validatebox.defaults.rules, { chkFloat : { validator :
+ * function(value, param) { var pattern = /^[0-9]{0,8}\.\d{1}$/; if
+ * (!pattern.exec(value)) { return; } var val = new Number(value); var par = new
+ * Number(param[0]); return val <= par; }, message :
+ * '请输入正确的格式的数值（x.x），且不能超过99999999小时' } });
+ */
 /* ---------------扩展easyUI小数校验end--------------- */
 
-/* ---------------验证数字或字母或组合start--------------- */
+// param[0]正则表达式扩展,param[1]错误信息
 $.extend($.fn.validatebox.defaults.rules, {
-	chkCharAndNum : {
+	regexp : {
 		validator : function(value, param) {
-			var pattern = /^[0-9a-zA-Z]{1,}$/;
-			if (!pattern.exec(value)) {
-				return;
+			var reg = new RegExp(param[0]);
+			if (!reg.test(value)) {
+				$.fn.validatebox.defaults.rules.regexp.message = param[1];
+				return false;
+			} else {
+				return true;
 			}
-			return value.length <= param[0];
 		},
-		message : '必须是字母或数字，并且长度不能超过{0}个字符'
+		message : ''
 	}
 });
-/* ---------------验证数字或字母或组合end--------------- */
-
-/* ---------------验证汉字或字母或组合start--------------- */
 $.extend($.fn.validatebox.defaults.rules, {
-	chkCharAndChinese : {
+	CharAndChinese : {
 		validator : function(value) {
-			var pattern = /^[\u4e00-\u9fa5a-zA-Z]{1,16}$/;
-			return pattern.exec(value);
-
+			var pattern = /^[\u4e00-\u9fa5a-zA-Z]*$/;
+			return pattern.test(value);
 		},
-		message : '必须是字母或汉字，并且长度不能超过16个字符'
+		message : '请输入字母或汉字'
 	}
 });
-/* ---------------验证汉字或字母或组合end--------------- */
+$.extend($.fn.validatebox.defaults.rules, {
+	Char : {
+		validator : function(value) {
+			var pattern = /^[a-zA-Z]*$/;
+			return pattern.test(value);
+		},
+		message : '请输入汉字'
+	}
+});
+$.extend($.fn.validatebox.defaults.rules, {
+	CharAndNumber : {
+		validator : function(value) {
+			var pattern = /^[0-9a-zA-Z]*$/;
+			return pattern.test(value);
+		},
+		message : '请输入字母或数字'
+	}
+});
+
+$.extend($.fn.validatebox.defaults.rules, {
+	Chinese : {
+		validator : function(value) {
+			var pattern = /^[\u4e00-\u9fa5]*$/;
+			return pattern.test(value);
+		},
+		message : '请输入汉字'
+	}
+});
+$.extend($.fn.validatebox.defaults.rules, {
+	ChineseAndNumber : {
+		validator : function(value) {
+			var pattern = /^[\u4e00-\u9fa50-9]*$/;
+			return pattern.test(value);
+		},
+		message : '请输入汉字或数字'
+	}
+});
+$.extend($.fn.validatebox.defaults.rules, {
+	CharAndChineseAndNumber : {
+		validator : function(value) {
+			var pattern = /^[\u4e00-\u9fa50-9a-zA-Z]*$/;
+			return pattern.test(value);
+		},
+		message : '请输入字母、汉字或数字'
+	}
+});
+$.extend($.fn.validatebox.defaults.rules, {
+	CharBig : {
+		validator : function(value) {
+			var pattern = /^[A-Z]*$/;
+			return pattern.test(value);
+		},
+		message : '请输入大写字母'
+	}
+});
+$.extend($.fn.validatebox.defaults.rules, {
+	CharSmall : {
+		validator : function(value) {
+			var pattern = /^[a-z]*$/;
+			return pattern.test(value);
+		},
+		message : '请输入小写字母'
+	}
+});
 
 /**
  * 所有选中行，依次调用参数中的方法 by李仁博
@@ -502,9 +555,9 @@ ez.loadSysDict = function(location) {
 
 ez.columnsFomatter = function(value, row, location) {
 	var sysDicts = ez.loadSysDict(location);
-	for(var i=0;i<sysDicts.length;i++){
-		if(sysDicts[i].value==value){
-			return sysDicts[i].text; 
+	for (var i = 0; i < sysDicts.length; i++) {
+		if (sysDicts[i].value == value) {
+			return sysDicts[i].text;
 		}
 	}
 	return value;

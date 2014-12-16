@@ -85,7 +85,7 @@
 				title : '功能类型',
 				field : 'functiontype',
 				formatter : function(value,row){
-					return ez.columnsFomatter(value,row,'com.datalook.model.sys.functiontype');
+					return ez.columnsFomatter(value,row,'com.datalook.model.sys.SysFunction.functiontype');
 				}
 			}, {
 				width : '80',

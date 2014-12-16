@@ -327,6 +327,11 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.datalook</groupId>
+			<artifactId>ezui-annotation</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 	</dependencies>
 

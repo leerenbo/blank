@@ -51,7 +51,7 @@
 				'data.id' : $(':input[name="data.id"]').val(),
 			}, function(result) {
 				if (result.id != undefined) {
-					var data = $.parseJSON(ez.jsonToString(result));
+					var data = ez.formLoadConvert(result);
 					if (result.id != undefined) {
 						$('#ezAddAndUpdataform').form('load', data);
 					}

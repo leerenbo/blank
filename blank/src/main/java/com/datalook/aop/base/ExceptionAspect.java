@@ -55,7 +55,7 @@ public class ExceptionAspect {
 			message = new String(express);
 		}
 		if (toWebException.isUseCode()) {
-			sysDict = sysDictService.getValue(jp.getTarget().getClass().getName() + "." + jp.getSignature().getName() + "()", toWebException.getCode());
+//			sysDict = sysDictService.getValue(jp.getTarget().getClass().getName() + "." + jp.getSignature().getName() + "()", toWebException.getCode());
 			express = (sysDict != null ? sysDict.getValue() : "");
 			message = (sysDict != null ? sysDict.getValue() : "");
 		}

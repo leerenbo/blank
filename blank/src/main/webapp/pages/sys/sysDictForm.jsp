@@ -15,9 +15,9 @@
 		if ($('form').form('validate')) {
 			var url;
 			if ($(':input[name="data.id"]').val().length > 0) {
-				url = ez.contextPath + '/sysUser!update.action';
+				url = ez.contextPath + '/sysDict!update.action';
 			} else {
-				url = ez.contextPath + '/sysUser!save.action';
+				url = ez.contextPath + '/sysDict!save.action';
 			}
 			$('#ezAddAndUpdataform').form('submit', {
 				url : url,
@@ -41,7 +41,7 @@
 				text : '数据加载中....'
 			});
 
-			$.post(ez.contextPath + '/sysUser!getById.action', {
+			$.post(ez.contextPath + '/sysDict!getById.action', {
 				'data.id' : $(':input[name="data.id"]').val()
 			}, function(result) {
 				if (result.id != undefined) {
@@ -58,17 +58,26 @@
 </head>
 <body>
 	<form id="ezAddAndUpdataform" method="post" enctype="multipart/form-data" class="form">
-		<input type="hidden" name="data.status" value="1"></input>
-		<input type="hidden" name="data.password" value=""></input>
-		<input type="hidden" name="data.id" value="<%=id%>" readonly="readonly" />
 		<fieldset>
-			<legend>用户基本信息</legend>
+			<legend>数据字典信息</legend>
 			<table class="table" style="width: 100%;">
+			
 				<tr>
-					<th>姓名</th>
-					<td><input name="data.realname" class="easyui-textbox" data-options="required:true,validType:'length[1,16]',invalidMessage:'长度不能超过16个字符'" /></td>
-					<th>登陆帐号</th>
-					<td><input name="data.username" class="easyui-textbox" data-options="required:true,validType:'length[1,16]',invalidMessage:'长度不能超过16个字符'" /></td>
+				<input name="data.id" type="hidden" value="<%=id%>" />
+				<th>字典组</th>
+				<td>
+					<input name="data.location" class="easyui-textbox" data-options=""/>
+				</td>
+				<th>字典键</th>
+				<td>
+					<input name="data.value" class="easyui-textbox" data-options=""/>
+				</td>
+				</tr>
+				<tr>
+				<th>字典值</th>
+				<td>
+					<input name="data.text" class="easyui-textbox" data-options=""/>
+				</td>
 				</tr>
 			</table>
 		</fieldset>

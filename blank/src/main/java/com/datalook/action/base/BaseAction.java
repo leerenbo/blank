@@ -256,7 +256,7 @@ public class BaseAction<T> extends ActionSupport {
 	protected Message beforeSave() {
 		Message json = new Message();
 		json.setSuccess(true);
-		json.setMsg("新建成功！");
+		json.setMsg("添加成功！");
 		return json;
 	}
 
@@ -276,7 +276,7 @@ public class BaseAction<T> extends ActionSupport {
 	protected Message beforeUpdate() {
 		Message json = new Message();
 		json.setSuccess(true);
-		json.setMsg("更新成功！");
+		json.setMsg("修改成功！");
 		return json;
 	}
 

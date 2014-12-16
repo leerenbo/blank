@@ -105,6 +105,7 @@ ez.stringToList = function(value) {
 
 /**
  * JSON对象转换成String
+ * 
  * @param o
  * @returns
  */
@@ -115,7 +116,7 @@ ez.jsonToString = function(o) {
 	if (typeof o == "object") {
 		if (!o.sort) {
 			for ( var i in o)
-				r.push("\"data."+i + "\":" + ez.jsonToString(o[i]));
+				r.push("\"data." + i + "\":" + ez.jsonToString(o[i]));
 			if (!!document.all && !/^\n?function\s*toString\(\)\s*\{\n?\s*\[native code\]\n?\s*\}\n?\s*$/.test(o.toString)) {
 				r.push("toString:" + o.toString.toString());
 			}
@@ -130,28 +131,63 @@ ez.jsonToString = function(o) {
 	return o.toString();
 };
 
+ez.formLoadConvert = function(o) {
+	var re = "{" + ez.jsonToPointAccess("data", o) + "}";
+	return $.parseJSON(re);
+}
+
+ez.jsonToPointAccess = function(prefix, o) {
+	var r = [];
+	if (typeof o == "string")
+		return "\"" + prefix + "\":" + "\"" + o.replace(/([\'\"\\])/g, "\\$1").replace(/(\n)/g, "\\n").replace(/(\r)/g, "\\r").replace(/(\t)/g, "\\t") + "\"";
+	if (typeof o == "object") {
+		for ( var i in o) {
+			if (typeof o[i] == "object") {
+				r.push(ez.jsonToPointAccess(prefix + "." + i, o[i]));
+			}
+			if (typeof o[i] == "string") {
+				r.push("\"" + prefix + "." + i + "\":" + "\"" + o[i].replace(/([\'\"\\])/g, "\\$1").replace(/(\n)/g, "\\n").replace(/(\r)/g, "\\r").replace(/(\t)/g, "\\t") + "\"");
+			}
+			if (typeof o[i] == "number") {
+				r.push("\"" + prefix + "." + i + "\":" + o[i]);
+			}
+		}
+	}
+	return r.join();
+}
 /**
  * Create a cookie with the given key and value and other optional parameters.
  * 
  * @example ez.cookie('the_cookie', 'the_value');
  * @desc Set the value of a cookie.
- * @example ez.cookie('the_cookie', 'the_value', { expires: 7, path: '/', domain: 'jquery.com', secure: true });
+ * @example ez.cookie('the_cookie', 'the_value', { expires: 7, path: '/',
+ *          domain: 'jquery.com', secure: true });
  * @desc Create a cookie with all available options.
  * @example ez.cookie('the_cookie', 'the_value');
  * @desc Create a session cookie.
  * @example ez.cookie('the_cookie', null);
- * @desc Delete a cookie by passing null as value. Keep in mind that you have to use the same path and domain used when the cookie was set.
+ * @desc Delete a cookie by passing null as value. Keep in mind that you have to
+ *       use the same path and domain used when the cookie was set.
  * 
  * @param String
  *            key The key of the cookie.
  * @param String
  *            value The value of the cookie.
  * @param Object
- *            options An object literal containing key/value pairs to provide optional cookie attributes.
- * @option Number|Date expires Either an integer specifying the expiration date from now on in days or a Date object. If a negative value is specified (e.g. a date in the past), the cookie will be deleted. If set to null or omitted, the cookie will be a session cookie and will not be retained when the the browser exits.
- * @option String path The value of the path atribute of the cookie (default: path of page that created the cookie).
- * @option String domain The value of the domain attribute of the cookie (default: domain of page that created the cookie).
- * @option Boolean secure If true, the secure attribute of the cookie will be set and the cookie transmission will require a secure protocol (like HTTPS).
+ *            options An object literal containing key/value pairs to provide
+ *            optional cookie attributes.
+ * @option Number|Date expires Either an integer specifying the expiration date
+ *         from now on in days or a Date object. If a negative value is
+ *         specified (e.g. a date in the past), the cookie will be deleted. If
+ *         set to null or omitted, the cookie will be a session cookie and will
+ *         not be retained when the the browser exits.
+ * @option String path The value of the path atribute of the cookie (default:
+ *         path of page that created the cookie).
+ * @option String domain The value of the domain attribute of the cookie
+ *         (default: domain of page that created the cookie).
+ * @option Boolean secure If true, the secure attribute of the cookie will be
+ *         set and the cookie transmission will require a secure protocol (like
+ *         HTTPS).
  * @type undefined
  * 
  * @name ez.cookie
@@ -211,22 +247,24 @@ $.ajaxSetup({
 	}
 });
 
-Date.prototype.Format = function (fmt) {
-    var o = {
-        "M+": this.getMonth() + 1, //月份 
-        "d+": this.getDate(), //日 
-        "h+": this.getHours(), //小时 
-        "m+": this.getMinutes(), //分 
-        "s+": this.getSeconds(), //秒 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-        "S": this.getMilliseconds() //毫秒 
-    };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
+Date.prototype.Format = function(fmt) {
+	var o = {
+		"M+" : this.getMonth() + 1, // 月份
+		"d+" : this.getDate(), // 日
+		"h+" : this.getHours(), // 小时
+		"m+" : this.getMinutes(), // 分
+		"s+" : this.getSeconds(), // 秒
+		"q+" : Math.floor((this.getMonth() + 3) / 3), // 季度
+		"S" : this.getMilliseconds()
+	// 毫秒
+	};
+	if (/(y+)/.test(fmt))
+		fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	for ( var k in o)
+		if (new RegExp("(" + k + ")").test(fmt))
+			fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+	return fmt;
 }
-
 
 /**
  * 解决class="iconImg"的img标记，没有src的时候，会出现边框问题

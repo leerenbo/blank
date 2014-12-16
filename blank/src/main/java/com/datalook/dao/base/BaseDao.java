@@ -16,7 +16,6 @@ import com.datalook.util.base.BeanUtils;
 @Repository
 @SuppressWarnings("unchecked")
 public class BaseDao<T> implements IBaseDao<T> {
-	private static int count = 0;
 	private EntityManager entityManager;
 
 	// jpa2.0获得 hibernate session
@@ -138,15 +137,11 @@ public class BaseDao<T> implements IBaseDao<T> {
 	 */
 
 	@Override
-	public void saveOrUpdate(T o) {
-		count++;
+	public Object saveOrUpdate(T o) {
 		if (o != null) {
-			entityManager.merge(o);
+			return entityManager.merge(o);
 		}
-		if (count > 1000) {
-			count = 0;
-			entityManager.flush();
-		}
+		return null;
 	}
 
 	/**

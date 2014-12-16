@@ -26,7 +26,7 @@
 			} else {
 				$pjq.messager.alert('提示', result.msg, 'error');
 			}
-			$pjq.messager.alert('提示', '修改成功！', 'info');
+			$pjq.messager.alert('提示', result.msg, 'info');
 		}, 'json');
 	};
 	$(function() {

@@ -82,7 +82,7 @@ public interface IBaseDao<T> {
 	 * @author: lirenbo
 	 * @param o
 	 */
-	public abstract void saveOrUpdate(T o);
+	public abstract Object saveOrUpdate(T o);
 
 	/**
 	 * 

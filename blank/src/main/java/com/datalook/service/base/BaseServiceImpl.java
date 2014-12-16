@@ -1,11 +1,20 @@
 package com.datalook.service.base;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.commons.lang3.reflect.MethodUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +22,7 @@ import com.datalook.dao.base.HqlFilter;
 import com.datalook.dao.base.IBaseDao;
 import com.datalook.dao.base.SqlBeanGenerater;
 import com.datalook.util.base.GenericsUtils;
+import com.datalook.util.base.ReflectUtil;
 
 /**
  * 
@@ -131,7 +141,8 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 
 	/**
 	 * 
-	 * @see com.datalook.service.base.BaseService#findByHQLFilter(com.datalook.dao.base.HqlFilter, int, int)
+	 * @see com.datalook.service.base.BaseService#findByHQLFilter(com.datalook.dao.base.HqlFilter,
+	 *      int, int)
 	 * 
 	 *      功能描述：根据分页信息，与过滤器查询，如果没有hqltable表则反射获取泛型为表 时间：2014年9月12日
 	 * @author: lirenbo
@@ -268,12 +279,13 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 
 	@Override
 	public Object save(T o) {
-		return baseDao.save(o);
+		return baseDao.saveOrUpdate(o);
 	}
 
 	/**
 	 * 
-	 * @see com.datalook.service.base.BaseService#saveoDeleteOld(java.lang.Object, java.lang.Object)
+	 * @see com.datalook.service.base.BaseService#saveoDeleteOld(java.lang.Object,
+	 *      java.lang.Object)
 	 * 
 	 *      功能描述：删除oldo，保存o 时间：2014年9月12日
 	 * @author: lirenbo
@@ -290,5 +302,52 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	@Override
 	public void saveOrUpdate(T o) {
 		baseDao.saveOrUpdate(o);
+	}
+
+	public <V> void relate(Integer id, String relatedIds, String collectionName, Class<V> relatedClazz) throws IllegalAccessException {
+
+		Class relatedIdClass = FieldUtils.getDeclaredField(relatedClazz, "id", true).getType();
+		T t = getById(id);
+		if (t != null) {
+			Collection<V> collection = (Collection<V>) FieldUtils.readDeclaredField(t, collectionName, true);
+			if(StringUtils.isBlank(relatedIds)){
+				OneToMany otm = ReflectUtil.getAnnotation(FieldUtils.getDeclaredField(t.getClass(), collectionName, true), OneToMany.class);
+				if (otm != null) {
+					for (Iterator iterator = collection.iterator(); iterator.hasNext();) {
+						V v = (V) iterator.next();
+						FieldUtils.writeDeclaredField(v, otm.mappedBy(), null, true);
+					}
+				}
+			}
+			collection.clear();
+			for (String relatedId : relatedIds.split(",")) {
+				if (StringUtils.isNotBlank(relatedId)) {
+					Object reflectId = null;
+					try {
+						reflectId = MethodUtils.invokeExactStaticMethod(relatedIdClass, "valueOf", new Object[] { relatedId }, new Class[] { String.class });
+					} catch (NoSuchMethodException e) {
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					} catch (InvocationTargetException e) {
+						e.printStackTrace();
+					}
+					V relatedObject = baseDao.getById(relatedClazz, reflectId);
+					if (relatedObject != null) {
+						collection.add(relatedObject);
+						ManyToMany mtm = ReflectUtil.getAnnotation(FieldUtils.getDeclaredField(t.getClass(), collectionName, true), ManyToMany.class);
+						if (mtm != null && StringUtils.isNotBlank(mtm.mappedBy())) {
+							Collection<T> relatedCollection = (Collection<T>) FieldUtils.readDeclaredField(relatedObject, mtm.mappedBy(), true);
+							relatedCollection.add(t);
+						}
+						OneToMany otm = ReflectUtil.getAnnotation(FieldUtils.getDeclaredField(t.getClass(), collectionName, true), OneToMany.class);
+						if (otm != null && StringUtils.isNotBlank(otm.mappedBy())) {
+							FieldUtils.writeDeclaredField(relatedObject, otm.mappedBy(), t, true);
+						}
+					}
+				}
+			}
+		}
+		baseDao.saveOrUpdate(t);
 	}
 }

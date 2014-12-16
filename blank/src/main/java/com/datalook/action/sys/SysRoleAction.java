@@ -30,9 +30,10 @@ public class SysRoleAction extends BaseAction<SysRole> {
 	 * 功能描述：角色授权 时间：2014年9月11日
 	 * 
 	 * @author ：lirenbo
+	 * @throws IllegalAccessException 
 	 */
 	@SuppressWarnings("unused")
-	public void grantSysFunction() {
+	public void grantSysFunction() throws IllegalAccessException {
 		Message re = new Message();
 		List<SysFunction> nowUserFunctions = getSessionInfo().getAllFunction();
 		String[] inSomeSysFunctionIds = new String[nowUserFunctions.size()];
@@ -53,8 +54,7 @@ public class SysRoleAction extends BaseAction<SysRole> {
 			return;
 		}
 		re.setSuccess(true);
-		((SysRoleService) service).grant(data.getId().toString(), grantids, inSomeSysFunctionIds);
-
+		service.relate(data.getId(), ids, "sysFunctions", SysFunction.class);
 		writeJson(re);
 	}
 

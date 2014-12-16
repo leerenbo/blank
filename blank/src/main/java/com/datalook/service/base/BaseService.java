@@ -249,4 +249,6 @@ public interface BaseService<T> {
 	 *            对象
 	 */
 	public void saveOrUpdate(T o);
+	
+	public <V> void relate(Integer id, String relatedIds,String collectionName,Class<V> relatedClazz) throws IllegalAccessException;
 }

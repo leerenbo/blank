@@ -102,10 +102,11 @@ public class SysUserAction extends BaseAction<SysUser> {
 	 * 
 	 *      功能描述： 时间：2014年9月29日
 	 * @author: lirenbo
+	 * @throws IllegalAccessException 
 	 */
-	public void grantSysRole() {
+	public void grantSysRole() throws IllegalAccessException {
 		Message json = new Message();
-		((SysUserService) service).grantSysRole(data.getId(), ids);
+		service.relate(data.getId(), ids, "sysRoles", SysRole.class);
 		json.setSuccess(true);
 		json.setMsg("授权成功");
 		writeJson(json);
