@@ -341,15 +341,16 @@
 			<plugin>
 				<groupId>com.datalook</groupId>
 				<artifactId>ezui-maven-plugin</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
 				<executions>
 					<execution>
-						<id></id>
 						<phase>test</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
-						<inherited>false</inherited>
+						<inherited>true</inherited>
 						<configuration>
+							<packagee>com.datalook</packagee>
 						</configuration>
 					</execution>
 				</executions>
@@ -388,9 +389,12 @@
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-archetype-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
 
 		</plugins>
-
 	</build>
-	<!-- <profiles> <profile> <id>sigar</id> <build> <plugins> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId> <version>1.1.1</version> <executions> <execution> <phase>test</phase> <goals> <goal>java</goal> </goals> <configuration> <mainClass>com.datalook.util.base.SigarDemo</mainClass> <arguments> <argument>arg0</argument> <argument>arg1</argument> </arguments> </configuration> </execution> </executions> </plugin> </plugins> </build> </profile> </profiles> -->
 </project>

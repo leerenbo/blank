@@ -74,7 +74,7 @@
 	$(function() {
 		ezgrid = $('#ezgrid').datagrid({
 			title : '',
-			url : ez.contextPath + '/sysRole!datagridByPage.action?hqland_status_dengyu_String=1',
+			url : ez.contextPath + '/sysRole!datagridByPage.action?hqland_status_dengyu_String=1&hqland_id_budeng_Integer=1',
 			striped : true,
 			rownumbers : true,
 			pagination : true,
