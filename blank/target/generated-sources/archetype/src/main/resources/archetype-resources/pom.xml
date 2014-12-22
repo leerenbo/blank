@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<version>${version}</version>
+	<packaging>war</packaging>
+	<name>${artifactId}</name>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<drools.version>6.1.0.Final</drools.version>
+		<jbpm.version>6.1.0.Final</jbpm.version>
+		<hibernate.version>4.2.7.Final</hibernate.version>
+		<hibernate.core.version>4.2.7.Final</hibernate.core.version>
+		<slf4j.version>1.6.4</slf4j.version>
+		<jboss.javaee.version>1.0.0.Final</jboss.javaee.version>
+		<logback.version>1.0.9</logback.version>
+		<h2.version>1.3.161</h2.version>
+		<btm.version>2.1.4</btm.version>
+		<junit.version>4.10</junit.version>
+	</properties>
+	<dependencies>
+
+		<!-- define drools BOM -->
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-bom</artifactId>
+			<type>pom</type>
+			<version>${drools.version}</version>
+			<scope>import</scope>
+		</dependency>
+		<!-- define drools BOM -->
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-bom</artifactId>
+			<type>pom</type>
+			<version>${jbpm.version}</version>
+			<scope>import</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-spring</artifactId>
+			<version>${jbpm.version}</version>
+		</dependency>
+
+		<!-- test dependencies -->
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-shared-services</artifactId>
+			<version>${jbpm.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.btm</groupId>
+			<artifactId>btm</artifactId>
+			<version>${btm.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-test</artifactId>
+			<version>${jbpm.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>javax.servlet.jsp.jstl</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.18.2-GA</version>
+		</dependency>
+
+		<!-- struts2核心包 -->
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-core</artifactId>
+			<version>2.3.16.3</version>
+		</dependency>
+		<!-- struts2与spring整合的包 -->
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-spring-plugin</artifactId>
+			<version>2.3.16.3</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-beans</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-web</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
+
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-convention-plugin</artifactId>
+			<version>2.3.16.3</version>
+		</dependency>
+		<!-- 在 Struts2中要使用 Ajax获得Json数据。要使用Ajax必须引用此Jar <dependency> <groupId>org.apache.struts</groupId> <artifactId>struts2-json-plugin</artifactId> <version>2.3.16.3</version> </dependency> -->
+
+		<!-- Hibernate核心包 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<!-- hibernate-jpa -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+
+		</dependency>
+		<!-- Oracle私有库驱动 <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc14</artifactId> <version>10.2.0.4.0</version> </dependency> -->
+		<!-- sql server驱动 -->
+		<dependency>
+			<groupId>net.sourceforge.jtds</groupId>
+			<artifactId>jtds</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+
+		<!-- ehcache缓冲池 -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>2.8.3</version>
+		</dependency>
+		<!-- ehcache需要的依赖 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+
+		<!-- Spring包 -->
+		<!-- Spring核心包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>spring-beans</artifactId>
+			<groupId>org.springframework</groupId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<artifactId>spring-core</artifactId>
+			<groupId>org.springframework</groupId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<artifactId>spring-web</artifactId>
+			<groupId>org.springframework</groupId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<artifactId>spring-context</artifactId>
+			<groupId>org.springframework</groupId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<artifactId>spring-orm</artifactId>
+			<groupId>org.springframework</groupId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<artifactId>spring-aop</artifactId>
+			<groupId>org.springframework</groupId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+
+		<!-- aspectj -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.1</version>
+		</dependency>
+		<!-- log4j日志包 <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> <version>1.2.17</version> </dependency> -->
+		<!-- log4j2日志包 -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+		<!-- log4j2 1api adapter -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-1.2-api</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+		<!-- c3p0连接池数据源 <dependency> <groupId>c3p0</groupId> <artifactId>c3p0</artifactId> <version>0.9.1.2</version> </dependency> -->
+
+		<!-- 可以看到struts2应用里的Action等各种资源的影射情况 -->
+		<!-- 可以使用类似http://localhost:9999/sshe/config-browser/showConstants.action的url来访问 -->
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-config-browser-plugin</artifactId>
+			<version>2.3.16.3</version>
+		</dependency>
+		<!-- druid连接池数据源 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.7</version>
+		</dependency>
+		<!-- 加入fastjson依赖包 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1.41</version>
+		</dependency>
+		<!-- 加入javamelody依赖包 -->
+		<dependency>
+			<groupId>net.bull.javamelody</groupId>
+			<artifactId>javamelody-core</artifactId>
+			<version>1.52.0</version>
+		</dependency>
+		<!--Apache BeanUtils -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils-core</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		<!-- servlet接口 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- jsp接口 -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- UEditor -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20140107</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.baidu</groupId>
+			<artifactId>ueditor</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.datalook</groupId>
+			<artifactId>ezui-annotation</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.datalook</groupId>
+				<artifactId>ezui-maven-plugin</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<phase>test</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<inherited>true</inherited>
+						<configuration>
+							<packagee>${package}</packagee>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<!-- 源码插件 -->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>utf-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<version>3.1</version>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-archetype-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

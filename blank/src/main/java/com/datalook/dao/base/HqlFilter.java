@@ -333,7 +333,7 @@ public class HqlFilter {
 		}
 		if (StringUtils.equalsIgnoreCase(columnType, "Date")) {
 			try {
-				return DateUtils.parseDate(value, new String[] { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM-dd", "yyyy/MM/dd" });
+				return DateUtils.parseDate(value, new String[] { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM-dd", "yyyy/MM/dd","HH:mm" });
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}

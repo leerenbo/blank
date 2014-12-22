@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+
+	<bean id="process" factory-method="newClassPathResource"
+		class="org.kie.internal.io.ResourceFactory">
+		<constructor-arg name="path" value="jbpm/processes/sample.bpmn2" />
+	</bean>
+
+ 	<bean id="taskService" class="org.kie.spring.factorybeans.TaskServiceFactoryBean"
+		destroy-method="close">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="listeners">
+			<list>
+				<bean class="org.jbpm.services.task.audit.JPATaskLifeCycleEventListener" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="runtimeEnvironment"
+		class="org.kie.spring.factorybeans.RuntimeEnvironmentFactoryBean">
+		<property name="type" value="DEFAULT" />
+		<!-- <property name="entityManager" ref="sharedEntityManagerBean"/> -->
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="taskService" ref="taskService" />
+		<property name="assets">
+			<map>
+				<entry key-ref="process">
+					<util:constant static-field="org.kie.api.io.ResourceType.BPMN2" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="runtimeManager" class="org.kie.spring.factorybeans.RuntimeManagerFactoryBean"
+		destroy-method="close">
+		<property name="type" value="SINGLETON" />
+		<property name="identifier" value="spring-rm" />
+		<property name="runtimeEnvironment" ref="runtimeEnvironment" />
+
+	</bean>
+
+<!-- 	<bean id="logService" class="org.jbpm.process.audit.JPAAuditLogService">
+		<constructor-arg name="emf" ref="entityManagerFactory" />
+		<constructor-arg name="type"
+			value="STANDALONE_LOCAL_SPRING_SHARED_EM" />
+	</bean>
+ -->
+</beans>
