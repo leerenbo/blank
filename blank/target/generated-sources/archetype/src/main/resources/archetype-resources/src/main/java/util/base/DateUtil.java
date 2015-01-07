@@ -6,6 +6,8 @@ package ${package}.util.base;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 日期工具类
@@ -14,9 +16,17 @@ import java.util.Date;
  */
 public class DateUtil {
 
+	private static Map<String, SimpleDateFormat> sdfMap = new HashMap<String, SimpleDateFormat>();
+
 	public static Date stringToDate(String str, String pattern) {
 		if (str != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+			SimpleDateFormat sdf;
+			if (sdfMap.containsKey(pattern)) {
+				sdf = sdfMap.get(pattern);
+			} else {
+				sdf = new SimpleDateFormat(pattern);
+				sdfMap.put(pattern, sdf);
+			}
 			try {
 				return sdf.parse(str);
 			} catch (ParseException e) {
@@ -25,7 +35,7 @@ public class DateUtil {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 日期转字符串
 	 * 
@@ -37,7 +47,13 @@ public class DateUtil {
 	 */
 	public static String dateToString(Date date, String pattern) {
 		if (date != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+			SimpleDateFormat sdf;
+			if (sdfMap.containsKey(pattern)) {
+				sdf = sdfMap.get(pattern);
+			} else {
+				sdf = new SimpleDateFormat(pattern);
+				sdfMap.put(pattern, sdf);
+			}
 			return sdf.format(date);
 		}
 		return "";

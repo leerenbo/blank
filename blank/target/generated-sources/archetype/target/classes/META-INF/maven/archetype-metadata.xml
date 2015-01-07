@@ -47,7 +47,7 @@
         <include>**/*.exe</include>
       </includes>
     </fileSet>
-    <fileSet filtered="true" encoding="UTF-8">
+    <fileSet encoding="UTF-8">
       <directory>src/main/resources</directory>
       <includes>
         <include>**/*.sql</include>
@@ -73,7 +73,7 @@
         <include>**/*.docx</include>
       </includes>
     </fileSet>
-    <fileSet filtered="true" encoding="UTF-8">
+    <fileSet encoding="UTF-8">
       <directory>.settings</directory>
       <includes>
         <include>**/*.prefs</include>
@@ -88,6 +88,13 @@
       <includes>
         <include>.classpath</include>
         <include>.project</include>
+      </includes>
+    </fileSet>
+    <fileSet encoding="UTF-8">
+      <directory></directory>
+      <includes>
+        <include>.gitignore</include>
+        <include>.springBeans</include>
       </includes>
     </fileSet>
   </fileSets>

@@ -69,8 +69,12 @@ insert into SYS_FUNCTION(id,functionname,functiontype,pid,seq,url,iconcls) value
 insert into SYS_ROLE_FUNCTION_RELATION(roleid,sysfunctionid) values(1,34);
 insert into SYS_FUNCTION(id,functionname,functiontype,pid,seq,url,iconcls) values(35,'数据字典删除','0',30,35,'/sysDict!deletePhysical','ext-icon-bullet_wrench');
 insert into SYS_ROLE_FUNCTION_RELATION(roleid,sysfunctionid) values(1,35);
-INSERT [SYS_DICT]([LOCATION],[VALUE],[TEXT]) VALUES('it.pkg.model.sys.SysFunction.functiontype','0','操作')
-INSERT [SYS_DICT]([LOCATION],[VALUE],[TEXT]) VALUES('it.pkg.model.sys.SysFunction.functiontype','2','滑动模块')
-INSERT [SYS_DICT]([LOCATION],[VALUE],[TEXT]) VALUES('it.pkg.model.sys.SysFunction.functiontype','3','功能页面')
+INSERT [SYS_DICT]([LOCATION],[VALUE],[TEXT]) VALUES('com.datalook.model.sys.SysFunction.functiontype','0','操作')
+INSERT [SYS_DICT]([LOCATION],[VALUE],[TEXT]) VALUES('com.datalook.model.sys.SysFunction.functiontype','2','滑动模块')
+INSERT [SYS_DICT]([LOCATION],[VALUE],[TEXT]) VALUES('com.datalook.model.sys.SysFunction.functiontype','3','功能页面')
+insert into SYS_FUNCTION(id,functionname,functiontype,pid,seq,url,iconcls) values(40,'excel批量导入信息管理','3',1,40,'/pages/sys/sysExcelUploadDatagrid.jsp','ext-icon-page_excel');
+insert into SYS_ROLE_FUNCTION_RELATION(roleid,sysfunctionid) values(1,40);
+insert into SYS_FUNCTION(id,functionname,functiontype,pid,seq,url,iconcls) values(41,'excel批量导入信息管理列表','0',40,41,'/sysExcelUpload!datagridByPage','ext-icon-bullet_wrench');
+insert into SYS_ROLE_FUNCTION_RELATION(roleid,sysfunctionid) values(1,41);
 
 

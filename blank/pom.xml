@@ -332,7 +332,11 @@
 			<artifactId>ezui-annotation</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
+		<dependency>
+		  <groupId>com.datalook.lrb</groupId>
+		  <artifactId>excel</artifactId>
+		  <version>0.1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 
@@ -350,7 +354,7 @@
 						</goals>
 						<inherited>true</inherited>
 						<configuration>
-							<packagee>com.datalook</packagee>
+							<packagee>${package}</packagee>
 						</configuration>
 					</execution>
 				</executions>

@@ -1,14 +1,24 @@
 package it.pkg.action.base;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
@@ -16,17 +26,21 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import it.pkg.dao.base.HqlFilter;
+import com.datalook.excel.core.OEM;
 import it.pkg.filter.base.FastjsonFilter;
+import it.pkg.model.sys.SysExcelUpload;
 import it.pkg.model.sys.easyui.Grid;
 import it.pkg.model.sys.easyui.Message;
 import it.pkg.model.sys.web.SessionInfo;
 import it.pkg.service.base.BaseService;
 import it.pkg.util.base.BeanUtils;
 import it.pkg.util.base.ConfigUtil;
+import it.pkg.util.base.DateUtil;
 import it.pkg.util.base.GenericsUtils;
 import it.pkg.util.base.LogUtil;
 import com.opensymphony.xwork2.ActionSupport;
@@ -42,6 +56,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage("basePackage")
 @Namespace("/")
 @Action
+@Result(name = "download", type = "stream", params = { "contentType", "application/octet-stream", "inputName", "inputStream", "contentDisposition", "attachment;filename=\"${fileName}\"", "bufferSize", "4096" })
 public class BaseAction<T> extends ActionSupport {
 	private static final long serialVersionUID = -8744267073413050746L;
 
@@ -49,16 +64,26 @@ public class BaseAction<T> extends ActionSupport {
 	protected int rows = 10;// 每页显示记录数
 	protected String sort;// 排序字段
 	protected String order = "asc";// asc/desc
-	protected String q;// easyui的combo和其子类过滤时使用
 
 	protected String ids;// 主键集合，逗号分割
 	protected T data;// 数据模型(与前台表单name相同，name="data.xxx")
 	protected T olddata;// 数据模型(与前台表单name相同，name="olddata.xxx")
 
 	protected BaseService<T> service;// 业务逻辑
+	protected String fileName;// 下载文件名称
+	protected InputStream inputStream; // 下载提供的io流
+	protected File uploadExcelFile;// 上传的文件
+	protected String uploadExcelFileFileName;
+	protected Date now;
+	protected BaseService baseService;
 
 	public void setService(BaseService<T> service) {
 		this.service = service;
+	}
+
+	@Resource(name = "baseService")
+	public void setBaseService(BaseService baseService) {
+		this.baseService = baseService;
 	}
 
 	public String getIds() {
@@ -117,16 +142,40 @@ public class BaseAction<T> extends ActionSupport {
 		this.order = order;
 	}
 
-	public String getQ() {
-		return q;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setQ(String q) {
-		this.q = q;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public InputStream getInputStream() {
+		return inputStream;
+	}
+
+	public void setInputStream(InputStream inputStream) {
+		this.inputStream = inputStream;
+	}
+
+	public File getUploadExcelFile() {
+		return uploadExcelFile;
+	}
+
+	public void setUploadExcelFile(File uploadExcelFile) {
+		this.uploadExcelFile = uploadExcelFile;
+	}
+
+	public String getUploadExcelFileFileName() {
+		return uploadExcelFileFileName;
+	}
+
+	public void setUploadExcelFileFileName(String uploadExcelFileFileName) {
+		this.uploadExcelFileFileName = uploadExcelFileFileName;
 	}
 
 	/**
-	 * @see it.pkg.action.base.IBaseAction#writeJsonByFilter(java.lang.Object,
+	 * @see it.pkg.wanhui.action.base.IBaseAction#writeJsonByFilter(java.lang.Object,
 	 *      java.lang.String[], java.lang.String[])
 	 * 
 	 *      功能描述： 时间：2014年9月29日
@@ -372,5 +421,96 @@ public class BaseAction<T> extends ActionSupport {
 
 	public SessionInfo getSessionInfo() {
 		return (SessionInfo) getSession().getAttribute(ConfigUtil.getSessionName());
+	}
+
+	public String downloadExcel() throws UnsupportedEncodingException {
+		HqlFilter hqlFilter = new HqlFilter(getRequest());
+		List<T> lse = service.findByHQLFilter(hqlFilter);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			if (lse.size() > 0) {
+				OEM.generateExecl(lse, baos, OEM.OFFICE03);
+			} else {
+				OEM.generateExeclTitle(GenericsUtils.getSuperClassGenricType(this.getClass()), baos, OEM.OFFICE03);
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		inputStream = new ByteArrayInputStream(baos.toByteArray());
+		if (StringUtils.isNotBlank(fileName)) {
+			fileName = new String((fileName + DateUtil.dateToString(new Date(), "yyyy-MM-dd-hhmmss") + ".xls").getBytes(), "iso8859-1");
+		} else {
+			fileName = new String(("报表" + DateUtil.dateToString(new Date(), "yyyy-MM-dd-hhmmss") + ".xls").getBytes(), "iso8859-1");
+		}
+		return "download";
+	}
+
+	public void uploadExcel() throws IOException {
+		now = new Date();
+		String destFilePath = getRequest().getServletContext().getRealPath("/") + File.separator + "upload" + File.separator + "excel" + File.separator + now.getTime() + uploadExcelFileFileName;
+		File destFile = new File(destFilePath);
+		FileUtils.copyFile(uploadExcelFile, destFile);
+		FileInputStream fis = FileUtils.openInputStream(destFile);
+		List<T> l = OEM.readExecl(GenericsUtils.getSuperClassGenricType(this.getClass()), fis, OEM.OFFICE03);
+		SysExcelUpload seu = afterUploadExcel(l);
+		baseService.save(seu);
+		Message msg = new Message();
+		msg.setMsg("导入成功<br/>" + seu.toString());
+		msg.setSuccess(true);
+		writeJson(msg);
+	}
+
+	protected SysExcelUpload afterUploadExcel(List<T> infoInExcel) throws IOException {
+		SysExcelUpload seu = new SysExcelUpload();
+		seu.setUploadTime(new Date());
+		List<T> errorList = new ArrayList<T>();
+		for (T info : infoInExcel) {
+			if (checkUploadExcel(info)) {
+				service.save(info);
+				seu.setSuccessCount(seu.getSuccessCount() + 1);
+			} else {
+				errorList.add(info);
+				seu.setErrorCount(seu.getErrorCount() + 1);
+			}
+		}
+
+		if (errorList.size() > 0) {
+			String errorFilePath = getRequest().getServletContext().getRealPath("/") + File.separator + "upload" + File.separator + "errorInfo" + File.separator + now.getTime() + uploadExcelFileFileName;
+			File errorFile = new File(errorFilePath);
+			OEM.generateExecl(errorList, FileUtils.openOutputStream(errorFile), OEM.OFFICE03);
+			seu.setErrorDocPath(getRequest().getContextPath() + "/upload/errorInfo/" + now.getTime() + uploadExcelFileFileName);
+		} else {
+
+		}
+		return seu;
+	}
+
+	protected boolean checkUploadExcel(T info) {
+		return true;
+	}
+
+	public String noSy_downloadExcelTemplate() throws InstantiationException, IllegalAccessException, UnsupportedEncodingException {
+		List<T> lse = new ArrayList<T>();
+		if (data != null) {
+			lse.add(data);
+		} else {
+		}
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			if (lse.size() > 0) {
+				OEM.generateExecl(lse, baos, OEM.OFFICE03);
+			} else {
+				OEM.generateExeclTitle(GenericsUtils.getSuperClassGenricType(this.getClass()), baos, OEM.OFFICE03);
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		inputStream = new ByteArrayInputStream(baos.toByteArray());
+		if (StringUtils.isNotBlank(fileName)) {
+			fileName = new String((fileName + "导入模板.xls").getBytes(), "iso8859-1");
+		} else {
+			fileName = new String("导入模板.xls".getBytes(), "iso8859-1");
+		}
+		return "download";
 	}
 }

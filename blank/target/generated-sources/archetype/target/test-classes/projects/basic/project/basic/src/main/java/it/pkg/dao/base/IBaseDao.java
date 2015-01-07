@@ -251,7 +251,7 @@ public interface IBaseDao<T> {
 	 * @return
 	 */
 	public abstract List<Object[]> findBySql(String sql, Map<String, Object> params);
-
+	public abstract <C> List<C> findBySql(String sql, Map<String, Object> params,Class<C> clazz);
 	/**
 	 * 
 	 * @see it.pkg.dao.base.IBaseDao#findBySql(java.lang.String, java.util.Map, int, int)

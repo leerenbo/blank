@@ -1,8 +1,5 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="${artifactId}">
+    <wb-module deploy-name="blank">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
@@ -10,7 +7,13 @@
         <dependent-module archiveName="ezui-annotation-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ezui-annotation/ezui-annotation">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="java-output-path" value="/kaoqin/target/classes"/>
-        <property name="context-root" value="${artifactId}"/>
+        <dependent-module archiveName="excel-0.1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/excel/excel">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="reflectutils-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/reflectutils/reflectutils">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/blank/target/classes"/>
+        <property name="context-root" value="blank"/>
     </wb-module>
 </project-modules>

@@ -1,9 +1,12 @@
 package com.datalook.dao.base;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -419,7 +422,62 @@ public class BaseDao<T> implements IBaseDao<T> {
 		}
 		return new ArrayList<Object[]>();
 	}
+    public <C> List<C> findBySql(String sql, Map<String, Object> params,Class<C> clazz) {
+	List<C> re = new ArrayList<C>();
+	String[] strs = sql.split("(select +)|( +from)");
+	String[] columns = strs[1].split(",");
+	Pattern kongge = Pattern.compile(".+\\s.+");
+	Pattern dian = Pattern.compile(".+\\..+");
+	for (int i = 0; i < columns.length; i++) {
+	    Matcher konggem = kongge.matcher(columns[i]);
+	    if (konggem.matches()) {
+		columns[i] = columns[i].split(" +")[1];
+	    }
+	    Matcher dianm = dian.matcher(columns[i]);
+	    if (dianm.matches()) {
+		columns[i] = columns[i].split("\\.")[1].trim();
+	    }
+	}
+	Query q = entityManager.createNativeQuery(sql);
+	if (params != null && !params.isEmpty()) {
+	    for (String key : params.keySet()) {
+		q.setParameter(key, params.get(key));
+	    }
+	}
+	List los = q.getResultList();
+	for (Object object : los) {
+	    try {
+		C c = clazz.newInstance();
+		for (int j = 0; j < columns.length; j++) {
+		    clazz.getDeclaredField(columns[j]).setAccessible(true);
+		    if (columns.length > 1) {
+			clazz.getDeclaredField(columns[j]).set(c,
+				((Array[]) object)[j]);
+		    } else if (columns.length == 1) {
 
+			clazz.getDeclaredField(columns[j]).set(c, object);
+		    }
+		}
+		re.add(c);
+	    } catch (IllegalArgumentException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    } catch (SecurityException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    } catch (IllegalAccessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    } catch (NoSuchFieldException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    } catch (InstantiationException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	}
+	return re;
+    }
 	/**
 	 * @see com.datalook.dao.base.IBaseDao#findBySql(java.lang.String,
 	 *      java.util.Map, int, int)

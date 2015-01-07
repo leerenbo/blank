@@ -5,7 +5,7 @@
 	<artifactId>basic</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>basic</name>
+	<name>blank</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<drools.version>6.1.0.Final</drools.version>
@@ -332,7 +332,11 @@
 			<artifactId>ezui-annotation</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
+		<dependency>
+		  <groupId>com.datalook.lrb</groupId>
+		  <artifactId>excel</artifactId>
+		  <version>0.1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 
